@@ -1,0 +1,34 @@
+{
+  "name": "@fairys/pc-valtio-form-basic",
+  "author": "SunLxy <1011771396@qq.com>",
+  "description": "框架组件库",
+  "homepage": "https://github.com/autumn-fairy-tales/valtio-form-basic",
+  "version": "0.0.12",
+  "main": "lib/index.js",
+  "types": "esm/index.d.ts",
+  "module": "esm/index.js",
+  "license": "ISC",
+  "scripts": {
+    "build": "carefrees-rslib build ",
+    "watch": "carefrees-rslib build --watch"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/autumn-fairy-tales/valtio-form-basic.git",
+    "directory": "packages/pc-valtio-form"
+  },
+  "files": [
+    "src",
+    "esm"
+  ],
+  "dependencies": {
+    "@fairys/valtio-form-basic": "^0.0.12"
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.21",
+    "react": "^18.0.0"
+  }
+}

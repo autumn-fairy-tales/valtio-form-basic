@@ -1,0 +1,39 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "----": "============================ui=============================",
+    "watch": "npm run-script watch --workspace @fairys/valtio-form-basic",
+    "build": "npm run-script build --workspace @fairys/valtio-form-basic",
+    "----------": "===========================taro-valtio-form==========================",
+    "watch:taro:form": "npm run-script watch --workspace @fairys/taro-valtio-form-basic",
+    "build:taro:form": "npm run-script build --workspace @fairys/taro-valtio-form-basic",
+    "-------": "============================docs=============================",
+    "build:docs": "npm run-script build --workspace docs",
+    "docs": "npm run-script dev --workspace docs",
+    "build:all": "npm run build && npm run build:taro:form && npm run build:docs",
+    "version": "lerna version --force-publish=* --no-changelog --no-git-tag-version --no-push",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\""
+  },
+  "dependencies": {
+    "@fairys/taro-tools-plugins": "^0.0.12",
+    "@carefrees/rslib": "~0.1.0",
+    "husky": "~9.1.7",
+    "lerna": "~8.2.3",
+    "prettier": "~2.7.0",
+    "pretty-quick": "~4.2.2",
+    "lint-staged": "~16.1.4",
+    "typescript": "~5.9.2",
+    "unocss": "~66.5.9",
+    "@unocss/postcss": "~66.5.9"
+  },
+  "lint-staged": {
+    "*.{js,jsx,tsx,ts,less,md,json}": "prettier --write"
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*",
+    "docs"
+  ]
+}
