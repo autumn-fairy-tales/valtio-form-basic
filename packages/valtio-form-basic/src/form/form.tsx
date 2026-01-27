@@ -18,10 +18,9 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> exten
   /**
    * 初始化表单数据类型，默认值为 deepCopy
    * - deepCopy：使用深度拷贝初始化表单数据
-   * - proxy：使用代理对象初始化表单数据
-   * - immutable：直接使用对象，不进行任何处理，注意，这个使用必须是`valtio`中的`proxy`声明的对象数据，否则表单项更新数据不会同步
+   * - immutable：直接使用对象(注意：当传递的不是`valtio`的`proxy`对象时，会使用`valtio`中的`proxy`声明)
    */
-  initFormDataType?: 'deepCopy' | 'proxy' | 'immutable';
+  initFormDataType?: 'deepCopy' | 'immutable';
 }
 
 /**

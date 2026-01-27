@@ -1,12 +1,37 @@
 import { MObject } from 'interface';
 import { createContext, useContext, useRef } from 'react';
-import { proxy, ref, snapshot, useSnapshot } from 'valtio';
+import { proxy, ref, snapshot, useSnapshot, unstable_getInternalStates, } from 'valtio';
 import AsyncValidator, { RuleItem, ValidateFieldsError, Values } from 'async-validator';
 import { copy } from 'fast-copy';
-import { formatePath, get, set } from 'form/utils';
+import { formatePath, get, set, isObject } from 'form/utils';
+import { FairysValtioFormAttrsProps } from 'form/form';
 
 /**表单实例*/
 export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>> {
+
+  /***
+   * 判断值是否为代理对象
+   * @param value 值
+   * @returns 是否为代理对象
+   */
+  isValtioProxy = (value: any) => {
+    const { refSet } = unstable_getInternalStates()
+    const canProxyDefault = (x: unknown): boolean =>
+      isObject(x) &&
+      !refSet.has(x) &&
+      (Array.isArray(x) || !(Symbol.iterator in x)) &&
+      !(x instanceof WeakMap) &&
+      !(x instanceof WeakSet) &&
+      !(x instanceof Error) &&
+      !(x instanceof Number) &&
+      !(x instanceof Date) &&
+      !(x instanceof String) &&
+      !(x instanceof RegExp) &&
+      !(x instanceof ArrayBuffer) &&
+      !(x instanceof Promise)
+    return canProxyDefault(value)
+  }
+
   /**状态*/
   state = proxy<T>({} as T);
   /**
@@ -19,18 +44,26 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
   ctor = (options?: {
     formData?: Partial<T>;
     hideState?: Record<PropertyKey, boolean>;
-    initFormDataType?: 'deepCopy' | 'proxy' | 'immutable';
+    initFormDataType?: FairysValtioFormAttrsProps['initFormDataType'];
   }) => {
     const { formData, hideState, initFormDataType = 'deepCopy' } = options || {};
     // 如果是 isProxy,则直接赋值
     this.errorState = proxy<Record<PropertyKey, string[]>>({});
     this.hideState = proxy<Record<PropertyKey, boolean>>(hideState ? copy(hideState) : {});
-    if (initFormDataType === 'deepCopy') {
-      this.state = proxy((formData ? copy(formData) : {}) as T);
-    } else if (initFormDataType === 'immutable' && formData) {
-      this.state = formData as T;
+    // 判断是否是代理对象
+    const isValtioProxy = this.isValtioProxy(formData)
+    if (isValtioProxy) {
+      if (initFormDataType === 'deepCopy') {
+        this.state = proxy(copy(snapshot(formData)) as T);
+      } else {
+        this.state = formData as T;
+      }
     } else {
-      this.state = proxy((formData || {}) as T);
+      if (initFormDataType === 'deepCopy') {
+        this.state = proxy(copy(formData || {}) as T);
+      } {
+        this.state = proxy((formData || {}) as T);
+      }
     }
   };
   /**

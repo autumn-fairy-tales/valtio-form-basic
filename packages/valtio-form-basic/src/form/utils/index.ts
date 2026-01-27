@@ -106,3 +106,6 @@ export function formateName(name?: string, parentName?: string) {
   }
   return '';
 }
+
+export const isObject = (x: unknown): x is object =>
+  typeof x === 'object' && x !== null
