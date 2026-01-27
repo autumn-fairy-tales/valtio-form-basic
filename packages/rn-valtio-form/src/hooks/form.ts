@@ -1,5 +1,5 @@
-import { MObject } from 'common/interface';
-import { FairysValtioFormInstance, useFairysValtioFormInstance } from 'common/instance';
+import type { MObject } from '@fairys/valtio-form-basic/esm/common';
+import { FairysValtioFormInstance, useFairysValtioFormInstance } from '@fairys/valtio-form-basic/esm/common';
 import { useMemo, type ReactNode } from 'react';
 import { FairysValtioFormLayoutAttrsProps } from './layout';
 import { RuleItem } from 'async-validator';
@@ -29,18 +29,7 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> exten
  * @example
  * 
  * ```tsx
-import { useFairysValtioForm } from "@fairys/valtio-form"
-import type { FairysValtioFormAttrProps } from "@fairys/valtio-form"
-export interface FormProps extends FairysValtioFormAttrProps{}
 
-export const Form = (props: FormProps) => {
-  const { formInstance,children, ...rest } = useFairysValtioForm(props)
-  return  (
-    <FairysValtioFormInstanceContext.Provider value={formInstance}>
-      <布局组件 {...rest}>{children}</布局组件>
-    </FairysValtioFormInstanceContext.Provider>
-  );
-}
  * ```
 */
 export function useFairysValtioForm<T extends MObject<T> = object>(props: FairysValtioFormAttrsProps<T>) {

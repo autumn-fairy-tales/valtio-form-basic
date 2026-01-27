@@ -1,6 +1,6 @@
 import { useRef, createContext, useContext, useMemo } from 'react';
 import { proxy, useSnapshot } from 'valtio';
-import { formatePath, formateName } from 'form/utils';
+import { formatePath, formateName } from 'common/utils';
 export interface FairysValtioFormParentAttrsState {
   name?: string;
 }

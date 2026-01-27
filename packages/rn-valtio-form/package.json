@@ -1,16 +1,16 @@
 {
-  "name": "@fairys/valtio-form-basic",
+  "name": "@fairys/rn-valtio-form-basic",
   "author": "SunLxy <1011771396@qq.com>",
-  "description": "使用 valtio 实现的表单基础库, 使其更加便捷，同时支持`PC`、`H5`、`Taro`，同时也更加灵活。",
+  "description": "框架组件库",
   "homepage": "https://github.com/autumn-fairy-tales/valtio-form-basic",
   "version": "0.0.12",
-  "main": "lib/index.js",
+  "main": "esm/index.js",
   "types": "esm/index.d.ts",
   "module": "esm/index.js",
   "license": "ISC",
   "scripts": {
-    "build": "carefrees-rslib build --config=./rslib.config.ts",
-    "watch": "carefrees-rslib build --watch --config=./rslib.config.ts"
+    "build": "carefrees-rslib build --esm",
+    "watch": "carefrees-rslib build --watch --esm"
   },
   "publishConfig": {
     "access": "public"
@@ -18,20 +18,17 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/autumn-fairy-tales/valtio-form-basic.git",
-    "directory": "packages/valtio-form-basic"
+    "directory": "packages/rn-valtio-form"
   },
   "files": [
     "src",
-    "esm",
-    "lib"
+    "esm"
   ],
   "dependencies": {
-    "async-validator": "~4.2.5",
-    "clsx": "2.1.1",
-    "fast-copy": "~4.0.2",
-    "valtio": "~2.1.5"
+    "@fairys/valtio-form-basic": "^0.0.12"
   },
   "devDependencies": {
+    "react-native": "0.76.9",
     "@types/react": "~18.2.21",
     "react": "^18.0.0"
   }

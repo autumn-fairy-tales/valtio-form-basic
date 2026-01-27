@@ -1,14 +1,13 @@
 /**表单项*/
 
-import { MObject } from 'interface';
+import { MObject } from 'common/interface';
 import React, { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
-import { useFairysValtioFormInstanceContextState, FairysValtioFormInstance } from './instance';
+import { useFairysValtioFormInstanceContextState, FairysValtioFormInstance } from 'common/instance';
 import { useFairysValtioFormLayoutContext, FairysValtioFormLayoutContextOptions } from './layout';
-import { FairysValtioFormParentAttrs, useFairysValtioFormAttrsName, useId } from './hooks';
-import { get } from './utils';
+import { FairysValtioFormParentAttrs, useFairysValtioFormAttrsName, useId } from 'common/hooks';
+import { formatePath, get } from 'common/utils';
 import { RuleItem } from 'async-validator';
-
 
 export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> {
   /**
@@ -27,6 +26,8 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> {
   label?: string;
   /**传递组件字段*/
   valuePropName?: string;
+  /**取值字段(默认 valuePropName字段值)*/
+  getValuePath?: string;
   /**自定义获取值*/
   getValueFromEvent?: (event: any, form: FairysValtioFormInstance<T>) => any;
   /**值格式化*/
@@ -143,6 +144,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   const {
     name,
     valuePropName = 'value',
+    getValuePath = valuePropName,
     getValueFromEvent,
     formatValue,
     onAfterUpdate,
@@ -194,19 +196,22 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   }, [_name]);
 
   const onValueChange = (event: any) => {
-    let value = event;
+    let _value = event;
     const target = event?.detail || event?.target;
     if (typeof getValueFromEvent === 'function') {
-      value = getValueFromEvent(event, formInstance);
-    } else if (event && target && typeof target === 'object' && valuePropName in target) {
-      value = target.valuePropName;
+      _value = getValueFromEvent(event, formInstance);
+    } else if (event && target && typeof target === 'object' && getValuePath in target) {
+      _value = get(target, formatePath(getValuePath));
     }
     if (typeof formatValue === 'function') {
-      value = formatValue(value, formInstance, event);
+      _value = formatValue(_value, formInstance, event);
     }
-    formInstance.updatedValueByPaths(_name, value);
+    // 校验值是否有变化
+    if (value === _value) return;
+
+    formInstance.updatedValueByPaths(_name, _value);
     if (typeof onAfterUpdate === 'function') {
-      onAfterUpdate(value, formInstance, event);
+      onAfterUpdate(_value, formInstance, event);
     }
   };
 
@@ -502,6 +507,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
   const {
     name,
     valuePropName = 'value',
+    getValuePath = valuePropName,
     getValueFromEvent,
     formatValue,
     onAfterUpdate,
@@ -534,19 +540,22 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
   }, [_name]);
 
   const onValueChange = (event: any) => {
-    let value = event;
+    let _value = event;
     const target = event?.detail || event?.target;
     if (typeof getValueFromEvent === 'function') {
-      value = getValueFromEvent(event, formInstance);
-    } else if (event && target && typeof target === 'object' && valuePropName in target) {
-      value = target.valuePropName;
+      _value = getValueFromEvent(event, formInstance);
+    } else if (event && target && typeof target === 'object' && getValuePath in target) {
+      _value = get(target, formatePath(getValuePath));
     }
     if (typeof formatValue === 'function') {
-      value = formatValue(value, formInstance, event);
+      _value = formatValue(_value, formInstance, event);
     }
-    formInstance.updatedValueByPaths(_name, value);
+    // 校验值是否有变化
+    if (value === _value) return;
+
+    formInstance.updatedValueByPaths(_name, _value);
     if (typeof onAfterUpdate === 'function') {
-      onAfterUpdate(value, formInstance, event);
+      onAfterUpdate(_value, formInstance, event);
     }
   };
   /**基础组件参数*/
