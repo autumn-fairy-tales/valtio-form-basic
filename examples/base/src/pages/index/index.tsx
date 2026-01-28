@@ -15,25 +15,33 @@ function Index() {
   };
 
   return (
-    <View>
-      <FairysTaroValtioForm form={form}
+    <View style={{ padding: 20 }}>
+      <FairysTaroValtioForm
+        form={form}
         rules={{
-          username: [
-            { required: true, message: '请输入用户名' },
-          ],
+          username: [{ required: true, message: '请输入用户名' }],
         }}
+        title={<View>登录表单</View>}
+        extra={<View>额外信息</View>}
+        bordered
       >
         <FairysTaroValtioForm.FormItem name="username" label="用户名">
           <Input placeholder="请输入" />
         </FairysTaroValtioForm.FormItem>
-        <FairysTaroValtioForm.FormItem
-          rules={[{ required: true, message: '请输入用户名2' }]}
-          name="2" label="用户名2">
+        <FairysTaroValtioForm.FormItem rules={[{ required: true, message: '请输入用户名2' }]} name="2" label="用户名2">
           <Input placeholder="请输入" />
         </FairysTaroValtioForm.FormItem>
+        <FairysTaroValtioForm.FormItem rules={[{ required: true, message: '请输入用户名3' }]} name="3" label="用户名3">
+          <Input placeholder="请输入" />
+        </FairysTaroValtioForm.FormItem>
+
+        <FairysTaroValtioForm.FormItem rules={[{ required: true, message: '请输入用户名4' }]} name="4" label="用户名4">
+          <Input placeholder="请输入" />
+        </FairysTaroValtioForm.FormItem>
+
         <Button onClick={onSubmit}>提交</Button>
       </FairysTaroValtioForm>
     </View>
   );
 }
-export default Index
+export default Index;

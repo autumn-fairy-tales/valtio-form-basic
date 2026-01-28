@@ -11,7 +11,7 @@ import {
 
 export interface FairysPCValtioFormItemProps<T extends MObject<T> = object>
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-  FairysValtioFormItemAttrsProps {
+    FairysValtioFormItemAttrsProps {
   /**是否使用控制隐藏的表单项*/
   isHide?: boolean;
   /**是否使用无样式表单项*/
@@ -36,7 +36,6 @@ export function FairysPCValtioFormItemBase<T extends MObject<T> = object>(
     errorClassName,
     helpClassName,
     isInvalid,
-    itemBorderType,
     children,
     error,
     formAttrsNameInstance,
@@ -58,11 +57,10 @@ export function FairysPCValtioFormItemBase<T extends MObject<T> = object>(
             <div className={itemInputClassName}>{children}</div>
           </FairysValtioFormParentAttrsContext.Provider>
           {extra ? <div className={itemExtraClassName}>{extra}</div> : <Fragment />}
-          {itemBorderType === 'body' && isInvalid ? <div className={errorClassName}>{error}</div> : <Fragment />}
         </div>
       </div>
       {helpText ? <div className={helpClassName}>{helpText}</div> : <Fragment />}
-      {isInvalid && itemBorderType !== 'body' ? <div className={errorClassName}>{error}</div> : <Fragment />}
+      {isInvalid ? <div className={errorClassName}>{error}</div> : <Fragment />}
     </div>
   );
 }

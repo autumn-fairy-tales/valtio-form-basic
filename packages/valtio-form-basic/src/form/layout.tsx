@@ -3,6 +3,8 @@ import clsx from 'clsx';
 import { proxy, useSnapshot } from 'valtio';
 
 export interface FairysValtioFormLayoutContextOptions {
+  /**平台*/
+  platform?: 'pc' | 'rn' | 'taro';
   /**列数据*/
   colCount?: number;
   /**规则校验失败错误提示位置*/
@@ -169,6 +171,7 @@ export function useFairysValtioFormLayoutAttrs(props: FairysValtioFormLayoutAttr
   const parent_isInvalidBorderRed = state.isInvalidBorderRed;
   const parent_isInvalidTextRed = state.isInvalidTextRed;
   const parent_showColon = state.showColon;
+  const parent_platform = state.platform;
 
   const {
     colCount = parent_colCount,
@@ -186,6 +189,7 @@ export function useFairysValtioFormLayoutAttrs(props: FairysValtioFormLayoutAttr
     isInvalidBorderRed = parent_isInvalidBorderRed,
     isInvalidTextRed = parent_isInvalidTextRed,
     showColon = parent_showColon,
+    platform = parent_platform,
     gap,
     isAllColSpan = false,
     className,
@@ -215,6 +219,7 @@ export function useFairysValtioFormLayoutAttrs(props: FairysValtioFormLayoutAttr
         isInvalidBorderRed,
         isInvalidTextRed,
         showColon,
+        platform,
       }),
     [
       colCount,
@@ -231,6 +236,7 @@ export function useFairysValtioFormLayoutAttrs(props: FairysValtioFormLayoutAttr
       isInvalidBorderRed,
       isInvalidTextRed,
       showColon,
+      platform,
     ],
   );
 
@@ -277,7 +283,7 @@ export function useFairysValtioFormLayoutAttrs(props: FairysValtioFormLayoutAttr
 
   const body_base = useMemo(() => {
     return clsx(
-      'fairys-valtio-form-layout-body fairystaroform__transition-all fairystaroform__duration-300 fairystaroform__px-[8px] fairystaroform__w-full fairystaroform__grid fairystaroform__gap-[2px] fairystaroform__box-border',
+      'fairys-valtio-form-layout-body fairystaroform__transition-all fairystaroform__duration-300 fairystaroform__px-[8px] fairystaroform__w-full fairystaroform__grid  fairystaroform__box-border fairystaroform__pt-[8px] fairystaroform__pb-[12px] fairystaroform__gap-[6px]',
       bodyClassName,
     );
   }, [bodyClassName]);

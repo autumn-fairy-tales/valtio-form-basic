@@ -10,6 +10,8 @@ import { formatePath, get } from 'common/utils';
 import { RuleItem } from 'async-validator';
 
 export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> {
+  /**平台*/
+  platform?: 'pc' | 'rn' | 'taro';
   /**
    * 表单项名称 ，字段需要和存储的字段路径一致
    *
@@ -140,6 +142,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   const parent_isInvalidBorderRed = layoutAttrs.isInvalidBorderRed;
   const parent_isInvalidTextRed = layoutAttrs.isInvalidTextRed;
   const parent_showColon = layoutAttrs.showColon;
+  const parent_platform = layoutAttrs.platform;
 
   const {
     name,
@@ -169,6 +172,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
     isInvalidTextRed = parent_isInvalidTextRed,
     isJoinParentField = true,
     rules,
+    platform = parent_platform,
   } = props;
 
   const {
@@ -183,17 +187,15 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   // 使用从 Form 中设置的规则
   const _formItemRules = formInstance.rules?.[_name];
   const id = useId(_name);
-
   formInstance.nameToPaths[_name] = paths;
-  /**挂载校验规则*/
-  if (Array.isArray(rules) && rules.length) {
-    formInstance.mountRules[_name] = rules;
-  }
   useEffect(() => {
+    if (Array.isArray(rules) && rules.length) {
+      formInstance.mountRules[_name] = rules;
+    }
     return () => {
       formInstance.removeRules(_name);
     };
-  }, [_name]);
+  }, [_name, rules]);
 
   const onValueChange = (event: any) => {
     let _value = event;
@@ -296,11 +298,10 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   const itemBody_cls = useMemo(() => {
     // 默认两端显示
     return clsx(
-      'fairys-valtio-form-item-body fairystaroform__transition-all fairystaroform__duration-300 fairystaroform__relative fairystaroform__flex-1 fairystaroform__flex fairystaroform__box-border',
+      'fairys-valtio-form-item-body fairystaroform__transition-all fairystaroform__duration-300 fairystaroform__relative fairystaroform__flex-1 fairystaroform__flex fairystaroform__box-border fairystaroform__items-start',
       {
         'fairystaroform__flex-row fairystaroform__justify-start': labelMode === 'left',
         'fairystaroform__flex-row fairystaroform__justify-end': labelMode === 'between' || labelMode === 'top',
-        'fairystaroform__flex-row': labelMode === 'top',
         'fairystaroform__border-b fairystaroform__border-b-solid fairystaroform__border-b-gray-200 ':
           itemBorderType === 'body',
         'fairys-valtio-form-item-invalid-border-red': isInvalid && isInvalidBorderRed && itemBorderType === 'body',
@@ -341,20 +342,25 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
       'fairys-valtio-form-item-body-error fairystaroform__transition-all fairystaroform__duration-300 fairystaroform__w-full fairystaroform__flex fairystaroform__flex-row fairystaroform__box-border fairystaroform__text-red fairystaroform__absolute fairystaroform__text-[10px] fairystaroform__z-10',
       {
         'fairystaroform__bottom-[-14px] fairystaroform__left-0 fairystaroform__justify-start':
-          errorLayout === 'bottom-left',
+          errorLayout === 'bottom-left' && platform !== 'pc',
+        'fairystaroform__bottom-[-10px] fairystaroform__left-0 fairystaroform__justify-start':
+          errorLayout === 'bottom-left' && platform === 'pc',
         'fairystaroform__bottom-[-14px] fairystaroform__right-0 fairystaroform__justify-end':
-          errorLayout === 'bottom-right',
+          errorLayout === 'bottom-right' && platform !== 'pc',
+        'fairystaroform__bottom-[-10px] fairystaroform__right-0 fairystaroform__justify-end':
+          errorLayout === 'bottom-right' && platform === 'pc',
         'fairystaroform__top-[-4px]  fairystaroform__right-0 fairystaroform__justify-end': errorLayout === 'top-right',
         'fairystaroform__top-[-4px] fairystaroform__left-0 fairystaroform__justify-start': errorLayout === 'top-left',
         /**边框底部提示*/
-        'fairystaroform__left-0  fairystaroform__bottom-[-2px] fairystaroform__justify-start':
+        'fairystaroform__left-0 fairystaroform__bottom-[-2px] fairystaroform__justify-start':
           errorLayout === 'left-border-top',
         /**边框顶部提示*/
-        'fairystaroform__right-0  fairystaroform__bottom-[-2px] fairystaroform__justify-end':
+        'fairystaroform__right-0 fairystaroform__bottom-[-2px] fairystaroform__justify-end':
           errorLayout === 'right-border-top',
+        'fairystaroform__px-[4px]': platform === 'pc',
       },
     );
-  }, [errorLayout]);
+  }, [errorLayout, platform]);
 
   const styleBase = useMemo(() => {
     const css: React.CSSProperties = {};

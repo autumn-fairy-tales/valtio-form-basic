@@ -12,7 +12,7 @@ import type { FairysValtioFormAttrsProps, MObject } from '@fairys/valtio-form-ba
 export * from '@fairys/valtio-form-basic';
 export * from './form.item';
 export * from './layout';
-export interface FairysPCValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> { }
+export interface FairysPCValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
 
 export function FairysPCValtioForm<T extends MObject<T> = object>(props: FairysPCValtioFormProps<T>) {
   const {
@@ -22,6 +22,7 @@ export function FairysPCValtioForm<T extends MObject<T> = object>(props: FairysP
     labelMode = 'top',
     errorLayout = 'bottom-left',
     itemBorderType = 'none',
+    platform = 'pc',
     ...rest
   } = useFairysValtioForm(props);
   return (
@@ -32,6 +33,7 @@ export function FairysPCValtioForm<T extends MObject<T> = object>(props: FairysP
         labelMode={labelMode}
         itemBorderType={itemBorderType}
         errorLayout={errorLayout}
+        platform={platform}
       >
         {children}
       </FairysPCValtioFormLayout>
