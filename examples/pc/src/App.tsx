@@ -1,4 +1,5 @@
 import { FairysPCValtioForm } from '@fairys/pc-valtio-form-basic';
+import '@fairys/valtio-form-basic/esm/styles/index.css';
 import { Button, Input } from 'antd';
 
 const App = () => {

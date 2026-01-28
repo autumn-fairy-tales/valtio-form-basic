@@ -99,18 +99,16 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   // 使用从 Form 中设置的规则
   const _formItemRules = formInstance.rules?.[_name];
   const id = useId(_name);
-
   formInstance.nameToPaths[_name] = paths;
-  /**挂载校验规则*/
-  if (Array.isArray(rules) && rules.length) {
-    formInstance.mountRules[_name] = rules;
-  }
 
   useEffect(() => {
+    if (Array.isArray(rules) && rules.length) {
+      formInstance.mountRules[_name] = rules;
+    }
     return () => {
       formInstance.removeRules(_name);
     };
-  }, [_name]);
+  }, [_name, rules]);
 
   const onValueChange = (event: any) => {
     let newValue = event;
@@ -382,19 +380,18 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
   const value = useMemo(() => get(state, paths), [state, paths]);
   const error = errorState[_name];
   formInstance.nameToPaths[_name] = paths;
-  /**挂载校验规则*/
-  if (Array.isArray(rules) && rules.length) {
-    formInstance.mountRules[_name] = rules;
-  }
 
   // 使用从 Form 中设置的规则
   const _formItemRules = formInstance.rules?.[_name];
 
   useEffect(() => {
+    if (Array.isArray(rules) && rules.length) {
+      formInstance.mountRules[_name] = rules;
+    }
     return () => {
       formInstance.removeRules(_name);
     };
-  }, [_name]);
+  }, [_name, rules]);
 
   const onValueChange = (event: any) => {
     let newValue = event;

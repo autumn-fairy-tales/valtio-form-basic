@@ -534,16 +534,15 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
   const value = useMemo(() => get(state, paths), [state, paths]);
   const error = errorState[_name];
   formInstance.nameToPaths[_name] = paths;
-  /**挂载校验规则*/
-  if (Array.isArray(rules) && rules.length) {
-    formInstance.mountRules[_name] = rules;
-  }
 
   useEffect(() => {
+    if (Array.isArray(rules) && rules.length) {
+      formInstance.mountRules[_name] = rules;
+    }
     return () => {
       formInstance.removeRules(_name);
     };
-  }, [_name]);
+  }, [_name, rules]);
 
   const onValueChange = (event: any) => {
     let _value = event;
