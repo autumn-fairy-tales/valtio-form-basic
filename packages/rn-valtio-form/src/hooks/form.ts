@@ -1,6 +1,6 @@
 import type { MObject } from '@fairys/valtio-form-basic/esm/common';
 import { FairysValtioFormInstance, useFairysValtioFormInstance } from '@fairys/valtio-form-basic/esm/common';
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, type ReactNode, useImperativeHandle, useEffect } from 'react';
 import { FairysValtioFormLayoutAttrsProps } from './layout';
 import { RuleItem } from 'async-validator';
 
@@ -32,13 +32,19 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> exten
 
  * ```
 */
-export function useFairysValtioForm<T extends MObject<T> = object>(props: FairysValtioFormAttrsProps<T>) {
+export function useFairysValtioForm<T extends MObject<T> = object>(
+  props: FairysValtioFormAttrsProps<T>,
+  ref: React.Ref<FairysValtioFormInstance<T>>,
+) {
   const { form, rules, formData, hideState, initFormDataType = 'deepCopy', ...rest } = props;
   const formInstance = useFairysValtioFormInstance(form);
   /**表单规则*/
   formInstance.rules = rules;
   /**初始化表单值*/
   useMemo(() => formInstance.ctor({ formData, hideState, initFormDataType }), []);
+  useImperativeHandle(ref, () => formInstance);
+  /**卸载清空所有数据*/
+  useEffect(() => () => formInstance.clear(), []);
   return {
     ...rest,
     formInstance,

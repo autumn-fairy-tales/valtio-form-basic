@@ -8,13 +8,17 @@ import {
   useFairysValtioFormInstanceContextState,
   useFairysValtioFormInstanceContextHideState,
 } from '@fairys/valtio-form-basic';
-import type { FairysValtioFormAttrsProps, MObject } from '@fairys/valtio-form-basic';
+import type { FairysValtioFormAttrsProps, FairysValtioFormInstance, MObject } from '@fairys/valtio-form-basic';
+import React from 'react';
 export * from '@fairys/valtio-form-basic';
 export * from './form.item';
 export * from './layout';
 export interface FairysPCValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
 
-export function FairysPCValtioForm<T extends MObject<T> = object>(props: FairysPCValtioFormProps<T>) {
+function FairysPCValtioFormBase<T extends MObject<T> = object>(
+  props: FairysPCValtioFormProps<T>,
+  ref: React.Ref<FairysValtioFormInstance<T>>,
+) {
   const {
     formInstance,
     children,
@@ -24,7 +28,7 @@ export function FairysPCValtioForm<T extends MObject<T> = object>(props: FairysP
     itemBorderType = 'none',
     platform = 'pc',
     ...rest
-  } = useFairysValtioForm(props);
+  } = useFairysValtioForm(props, ref);
   return (
     <FairysValtioFormInstanceContext.Provider value={formInstance}>
       <FairysPCValtioFormLayout
@@ -40,6 +44,25 @@ export function FairysPCValtioForm<T extends MObject<T> = object>(props: FairysP
     </FairysValtioFormInstanceContext.Provider>
   );
 }
+
+export const FairysPCValtioForm = React.forwardRef(
+  FairysPCValtioFormBase,
+) as unknown as typeof FairysPCValtioFormBase & {
+  /**初始化实例*/
+  useForm: typeof useFairysValtioFormInstance;
+  /**获取状态*/
+  useFormState: typeof useFairysValtioFormInstanceContextState;
+  /**获取隐藏状态*/
+  useFormHideState: typeof useFairysValtioFormInstanceContextHideState;
+  /**获取上下文实例*/
+  useFormInstance: typeof useFairysValtioFormInstanceContext;
+  /**表单项基础组件*/
+  FormItemBase: typeof FairysPCValtioFormItemBase;
+  /**表单项组件*/
+  FormItem: typeof FairysPCValtioFormItem;
+  /**隐藏表单项组件*/
+  FormHideItem: typeof FairysPCValtioFormHideItem;
+};
 /**初始化实例*/
 FairysPCValtioForm.useForm = useFairysValtioFormInstance;
 /**获取状态*/

@@ -8,20 +8,43 @@ import {
   useFairysValtioFormInstanceContextHideState,
 } from '@fairys/valtio-form-basic/esm/common';
 
-import type { MObject } from '@fairys/valtio-form-basic/esm/common';
+import type { FairysValtioFormInstance, MObject } from '@fairys/valtio-form-basic/esm/common';
 import type { FairysValtioFormAttrsProps } from 'hooks/form';
 import { useFairysValtioForm } from 'hooks/form';
+import React from 'react';
 
 export interface FairysRNValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
 
-export function FairysRNValtioForm<T extends MObject<T> = object>(props: FairysRNValtioFormProps<T>) {
-  const { formInstance, children, ...rest } = useFairysValtioForm(props);
+function FairysRNValtioFormBase<T extends MObject<T> = object>(
+  props: FairysRNValtioFormProps<T>,
+  ref: React.Ref<FairysValtioFormInstance<T>>,
+) {
+  const { formInstance, children, ...rest } = useFairysValtioForm(props, ref);
   return (
     <FairysValtioFormInstanceContext.Provider value={formInstance}>
       <FairysRNValtioFormLayout {...rest}>{children}</FairysRNValtioFormLayout>
     </FairysValtioFormInstanceContext.Provider>
   );
 }
+
+export const FairysRNValtioForm = React.forwardRef(
+  FairysRNValtioFormBase,
+) as unknown as typeof FairysRNValtioFormBase & {
+  /**初始化实例*/
+  useForm: typeof useFairysValtioFormInstance;
+  /**获取状态*/
+  useFormState: typeof useFairysValtioFormInstanceContextState;
+  /**获取隐藏状态*/
+  useFormHideState: typeof useFairysValtioFormInstanceContextHideState;
+  /**获取上下文实例*/
+  useFormInstance: typeof useFairysValtioFormInstanceContext;
+  /**表单项基础组件*/
+  FormItemBase: typeof FairysRNValtioFormItemBase;
+  /**表单项组件*/
+  FormItem: typeof FairysRNValtioFormItem;
+  /**隐藏表单项组件*/
+  FormHideItem: typeof FairysRNValtioFormHideItem;
+};
 /**初始化实例*/
 FairysRNValtioForm.useForm = useFairysValtioFormInstance;
 /**获取状态*/

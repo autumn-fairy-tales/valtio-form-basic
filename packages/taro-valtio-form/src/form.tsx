@@ -8,20 +8,43 @@ import {
   useFairysValtioFormInstanceContextState,
   useFairysValtioFormInstanceContextHideState,
 } from '@fairys/valtio-form-basic';
-import type { FairysValtioFormAttrsProps, MObject } from '@fairys/valtio-form-basic';
+import type { FairysValtioFormAttrsProps, FairysValtioFormInstance, MObject } from '@fairys/valtio-form-basic';
+import React from 'react';
 export * from '@fairys/valtio-form-basic';
 export * from './form.item';
 export * from './layout';
-export interface FairysTaroValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> { }
+export interface FairysTaroValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
 
-export function FairysTaroValtioForm<T extends MObject<T> = object>(props: FairysTaroValtioFormProps<T>) {
-  const { formInstance, children, ...rest } = useFairysValtioForm(props);
+function FairysTaroValtioFormBase<T extends MObject<T> = object>(
+  props: FairysTaroValtioFormProps<T>,
+  ref: React.Ref<FairysValtioFormInstance<T>>,
+) {
+  const { formInstance, children, ...rest } = useFairysValtioForm(props, ref);
   return (
     <FairysValtioFormInstanceContext.Provider value={formInstance}>
       <FairysTaroValtioFormLayout {...rest}>{children}</FairysTaroValtioFormLayout>
     </FairysValtioFormInstanceContext.Provider>
   );
 }
+
+export const FairysTaroValtioForm = React.forwardRef(
+  FairysTaroValtioFormBase,
+) as unknown as typeof FairysTaroValtioFormBase & {
+  /**初始化实例*/
+  useForm: typeof useFairysValtioFormInstance;
+  /**获取状态*/
+  useFormState: typeof useFairysValtioFormInstanceContextState;
+  /**获取隐藏状态*/
+  useFormHideState: typeof useFairysValtioFormInstanceContextHideState;
+  /**获取上下文实例*/
+  useFormInstance: typeof useFairysValtioFormInstanceContext;
+  /**表单项基础组件*/
+  FormItemBase: typeof FairysTaroValtioFormItemBase;
+  /**表单项组件*/
+  FormItem: typeof FairysTaroValtioFormItem;
+  /**隐藏表单项组件*/
+  FormHideItem: typeof FairysTaroValtioFormHideItem;
+};
 /**初始化实例*/
 FairysTaroValtioForm.useForm = useFairysValtioFormInstance;
 /**获取状态*/
@@ -34,5 +57,5 @@ FairysTaroValtioForm.useFormInstance = useFairysValtioFormInstanceContext;
 FairysTaroValtioForm.FormItemBase = FairysTaroValtioFormItemBase;
 /**表单项*/
 FairysTaroValtioForm.FormItem = FairysTaroValtioFormItem;
-/**隐藏表单想*/
+/**隐藏表单项组件*/
 FairysTaroValtioForm.FormHideItem = FairysTaroValtioFormHideItem;
