@@ -3,7 +3,7 @@
   "author": "SunLxy <1011771396@qq.com>",
   "description": "rn表单框架组件",
   "homepage": "https://github.com/autumn-fairy-tales/valtio-form-basic",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "esm/index.js",
   "types": "esm/index.d.ts",
   "module": "esm/index.js",
@@ -25,11 +25,11 @@
     "esm"
   ],
   "dependencies": {
-    "@fairys/valtio-form-basic": "^0.0.12"
+    "@fairys/valtio-form-basic": "^0.0.13"
   },
   "devDependencies": {
-    "react-native": "0.76.9",
     "@types/react": "~18.2.21",
-    "react": "^18.0.0"
+    "react": "^18.0.0",
+    "react-native": "0.76.9"
   }
 }

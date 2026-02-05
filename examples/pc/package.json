@@ -1,6 +1,6 @@
 {
   "name": "pc",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,10 +9,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
+    "@fairys/pc-valtio-form-basic": "^0.0.13",
+    "antd": "^5.19.4",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "@fairys/pc-valtio-form-basic": "^0.0.12",
-    "antd": "^5.19.4"
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.7.1",
