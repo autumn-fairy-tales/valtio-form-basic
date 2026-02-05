@@ -15,6 +15,6 @@ hero:
     alt: Logo
 features:
   - title: 基础表单组件
-    details: 提供了基础的表单组件，帮助开发者快速构建跨平台应用。
+    details: 使用 valtio 实现的表单基础库, 使其更加便捷和灵活，同时支持`PC`、`H5`、`Taro`，帮助开发者快速构建跨平台应用。
     icon: 🎨
 ---
