@@ -6,7 +6,7 @@ export default defineConfig({
     cleanUrls: true,
   },
   lang: 'zh',
-  base: process.env.NODE_ENV === 'production' ? '/fairys-valtio-form/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/valtio-form-basic/' : '/',
   root: path.join(__dirname, 'docs'),
   title: 'Fairys Valtio Form',
   icon: '/logo.png',
