@@ -1,5 +1,5 @@
 ---
-title: 基础表单组件概览
+title: 基础表单组件概览（PC）
 overview: true
 ---
 

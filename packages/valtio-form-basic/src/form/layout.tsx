@@ -106,7 +106,7 @@ export const FairysValtioFormLayoutContext = createContext<FairysValtioFormLayou
 export const useFairysValtioFormLayoutContext = () => {
   const instance = useContext(FairysValtioFormLayoutContext);
   const state = useSnapshot(instance.state);
-  return [state, instance] as const;
+  return [state, instance] as [FairysValtioFormLayoutContextOptions, FairysValtioFormLayoutInstance];
 };
 
 /**

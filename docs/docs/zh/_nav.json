@@ -1,10 +1,5 @@
 [
   {
-    "text": "指南",
-    "link": "/guide/",
-    "activeMatch": "/guide/"
-  },
-  {
     "text": "基础表单",
     "link": "/basic-form/",
     "activeMatch": "/basic-form/"

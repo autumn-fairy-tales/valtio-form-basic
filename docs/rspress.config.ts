@@ -22,6 +22,7 @@ export default defineConfig({
     light: '/logo.png',
     dark: '/logo.png',
   },
+
   themeConfig: {
     socialLinks: [
       {
