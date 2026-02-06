@@ -142,15 +142,26 @@ export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> 
     formAttrsNameInstance: FairysValtioFormParentAttrs;
     /**是否显示冒号*/
     showColon: boolean;
+    // 基础样式
+    /**表单项样式*/
     itemStyle: ViewProps['style'];
+    /**表单项容器样式*/
     itemContainerStyle: ViewProps['style'];
+    /**表单项标签样式*/
     itemLabelStyle: ViewProps['style'];
+    /**表单项标签文本样式*/
     itemLabelTextStyle: ViewProps['style'];
+    /**表单项标签显示冒号样式*/
     itemLabelShowColonStyle: ViewProps['style'];
+    /**表单项主体样式*/
     itemBodyStyle: ViewProps['style'];
+    /**表单项输入样式*/
     itemInputStyle: ViewProps['style'];
+    /**表单项额外样式*/
     itemExtraStyle: ViewProps['style'];
+    /**错误样式*/
     errorStyle: ViewProps['style'];
+    /**帮助样式*/
     helpStyle: ViewProps['style'];
     /**子元素*/
     children?: React.ReactNode;
@@ -221,34 +232,11 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> exten
 }
 /**
  * 表单属性处理
- *
 */
-export declare function useFairysValtioForm<T extends MObject<T> = object>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): {
+export declare function useFairysValtioForm<T extends MObject<T> = object>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): Omit<FairysValtioFormAttrsProps<T>, "initFormDataType" | "form" | "rules" | "formData" | "hideState"> & {
     formInstance: FairysValtioFormInstance<T>;
-    /**子元素*/
-    children: ReactNode;
-    gap?: string | number;
-    title?: React.ReactNode;
-    extra?: React.ReactNode;
-    style?: import("react-native").ViewProps["style"];
-    headerStyle?: import("react-native").ViewProps["style"];
-    headerTextStyle?: import("react-native").ViewProps["style"];
-    headerExtraStyle?: import("react-native").ViewProps["style"];
-    bodyStyle?: import("react-native").ViewProps["style"];
-    bordered?: boolean;
-    formItemStyle?: import("react-native").ViewProps["style"];
-    formItemLabelStyle?: import("react-native").ViewProps["style"];
-    formItemBodyStyle?: import("react-native").ViewProps["style"];
-    platform?: "pc" | "rn" | "taro";
-    colCount?: number;
-    errorLayout?: "bottom-left" | "bottom-right" | "top-right" | "top-left" | "left-border-top" | "right-border-top";
-    labelMode?: "left" | "top" | "between";
-    itemBorderType?: "bottom" | "body" | "none";
-    itemBorderColor?: React.CSSProperties["borderColor"];
-    isInvalidBorderRed?: boolean;
-    isInvalidTextRed?: boolean;
-    showColon?: boolean;
 };
+
 ```
 
 ## 类型

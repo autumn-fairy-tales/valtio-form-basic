@@ -87,14 +87,8 @@ export const useFairysValtioFormLayoutContext = () => {
 
 /**
  * 布局属性处理
- * 
- * @example
- * 
- * ```tsx
-
-  ```
- * 
-*/
+ *
+ */
 export function useFairysValtioFormLayoutAttrs(props: FairysValtioFormLayoutAttrsProps) {
   const formLayoutInstance = useFairysValtioFormLayoutInstance();
   const [state] = useFairysValtioFormLayoutContext();

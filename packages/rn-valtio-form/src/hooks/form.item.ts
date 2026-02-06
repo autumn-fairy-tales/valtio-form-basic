@@ -22,21 +22,19 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object>
     _FairysValtioFormItemAttrsProps<T>,
     'style' | 'labelStyle' | 'bodyStyle' | 'rowSpan' | 'className' | 'labelClassName' | 'bodyClassName'
   > {
+  // 基础样式
+  /**表单项样式*/
   style?: ViewProps['style'];
+  /**表单项标签样式*/
   labelStyle?: ViewProps['style'];
+  /**表单项主体样式*/
   bodyStyle?: ViewProps['style'];
 }
 
 /**
  * 处理表单表单项属性
- * 
- * @example
- * 
- * ```tsx
-
- * ```
- * 
-*/
+ *
+ */
 export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(props: FairysValtioFormItemAttrsProps<T>) {
   const [layoutAttrs] = useFairysValtioFormLayoutContext();
   const colCount = layoutAttrs.colCount || 1;
@@ -329,15 +327,26 @@ export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> 
   /**是否显示冒号*/
   showColon: boolean;
   // =========================================
+  // 基础样式
+  /**表单项样式*/
   itemStyle: ViewProps['style'];
+  /**表单项容器样式*/
   itemContainerStyle: ViewProps['style'];
+  /**表单项标签样式*/
   itemLabelStyle: ViewProps['style'];
+  /**表单项标签文本样式*/
   itemLabelTextStyle: ViewProps['style'];
+  /**表单项标签显示冒号样式*/
   itemLabelShowColonStyle: ViewProps['style'];
+  /**表单项主体样式*/
   itemBodyStyle: ViewProps['style'];
+  /**表单项输入样式*/
   itemInputStyle: ViewProps['style'];
+  /**表单项额外样式*/
   itemExtraStyle: ViewProps['style'];
+  /**错误样式*/
   errorStyle: ViewProps['style'];
+  /**帮助样式*/
   helpStyle: ViewProps['style'];
   /**子元素*/
   children?: React.ReactNode;
@@ -345,13 +354,7 @@ export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> 
 
 /**
  * 没有样式的表单项属性，仅返回基础输入组件参数
- * 
- * @example
- * 
- *```tsx 
-
- * ```
-*/
+ */
 export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = object>(
   props: FairysValtioFormItemAttrsProps<T>,
 ) {

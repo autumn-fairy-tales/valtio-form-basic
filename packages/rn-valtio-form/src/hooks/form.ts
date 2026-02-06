@@ -25,13 +25,8 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> exten
 
 /**
  * 表单属性处理
- * 
- * @example
- * 
- * ```tsx
-
- * ```
-*/
+ *
+ */
 export function useFairysValtioForm<T extends MObject<T> = object>(
   props: FairysValtioFormAttrsProps<T>,
   ref: React.Ref<FairysValtioFormInstance<T>>,
@@ -48,5 +43,7 @@ export function useFairysValtioForm<T extends MObject<T> = object>(
   return {
     ...rest,
     formInstance,
+  } as Omit<FairysValtioFormAttrsProps<T>, 'initFormDataType' | 'form' | 'rules' | 'formData' | 'hideState'> & {
+    formInstance: FairysValtioFormInstance<T>;
   };
 }
