@@ -722,6 +722,12 @@ export declare function get<TDefault = unknown>(value: any, segments: PropertyKe
  * @returns 格式化后的路径
  */
 export declare function formatePath(path: PropertyKey): (number | symbol)[] | (string | number)[];
+/***
+ * 移除值
+ * @param value 任意值
+ * @param segments 键路径
+ */
+export declare function removeValueByPaths(value: any, segments: PropertyKey[]): void;
 /**格式化属性名*/
 export declare function formateName(name?: string, parentName?: string): string;
 /***
