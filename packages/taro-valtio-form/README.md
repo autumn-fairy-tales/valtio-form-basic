@@ -9,7 +9,7 @@ npm install @fairys/taro-valtio-form-basic # yarn add @fairys/taro-valtio-form-b
 
 ### 类型
 
-部分参数依赖[基础表单组件概览](/basic-form/)
+部分参数依赖[基础表单组件概览](https://autumn-fairy-tales.github.io/valtio-form-basic/basic-form/)
 
 **布局**
 

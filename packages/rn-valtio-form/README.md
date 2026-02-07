@@ -11,6 +11,7 @@ npm install @fairys/rn-valtio-form-basic # yarn add @fairys/rn-valtio-form-basic
 ### 重写样式部分
 
 **布局**
+
 ```ts
 import { ViewProps } from 'react-native';
 import type { FairysValtioFormLayoutContextOptions as _FairysValtioFormLayoutContextOptions } from '@fairys/valtio-form-basic';
@@ -247,7 +248,7 @@ export declare function useFairysValtioForm<T extends MObject<T> = object>(props
 
 ### 类型
 
-部分参数依赖[基础表单组件概览](/basic-form/)
+部分参数依赖[基础表单组件概览](https://autumn-fairy-tales.github.io/valtio-form-basic/basic-form/)
 
 **布局**
 

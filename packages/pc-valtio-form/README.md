@@ -11,7 +11,7 @@ npm install @fairys/pc-valtio-form-basic  # yarn add @fairys/pc-valtio-form-basi
 
 ### 类型
 
-部分参数依赖[基础表单组件概览](/basic-form/)
+部分参数依赖[基础表单组件概览](https://autumn-fairy-tales.github.io/valtio-form-basic/basic-form/)
 
 **布局**
 
