@@ -81,7 +81,6 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<st
   isJoinParentField?: boolean;
   /**校验规则*/
   rules?: RuleItem[];
-
   /**卸载移除数据值
    * @default true
    */
@@ -539,6 +538,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     isJoinParentField = true,
     rules,
     isRemoveValueOnUnmount = true,
+    isRequired: _isRequired,
   } = props;
   const [state, errorState, formInstance] = useFairysValtioFormInstanceContextState<T>();
   const {
@@ -551,6 +551,8 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
   const value = useMemo(() => get(state, paths), [state, paths]);
   const error = errorState[_name];
   formInstance.nameToPaths[_name] = paths;
+  // 使用从 Form 中设置的规则
+  const _formItemRules = formInstance.rules?.[_name];
 
   useEffect(() => {
     if (Array.isArray(rules) && rules.length) {
@@ -580,6 +582,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
       onAfterUpdate(_value, formInstance, event);
     }
   };
+
   useEffect(() => {
     return () => {
       if (isRemoveValueOnUnmount) {
@@ -587,6 +590,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
       }
     };
   }, []);
+
   /**基础组件参数*/
   const baseControl = {
     ...attrs,
@@ -595,8 +599,30 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     [valuePropName]: value,
     [trigger]: onValueChange,
   };
+
+  /**判断是否必填*/
+  const isRequired = useMemo(() => {
+    if (_isRequired) {
+      return _isRequired;
+    } else if (Array.isArray(rules) && rules.length) {
+      return rules.some((rule) => rule.required);
+    } else if (_formItemRules && Array.isArray(_formItemRules) && _formItemRules.length) {
+      return _formItemRules.some((rule) => rule.required);
+    }
+    return false;
+  }, [rules, formInstance, _formItemRules]);
+
+  /**校验是否存在错误信息*/
+  const isInvalid = useMemo(() => {
+    if (Array.isArray(error) && error.length) {
+      return true;
+    }
+    return false;
+  }, [error]);
   return {
     value,
+    isInvalid,
+    isRequired,
     error,
     onValueChange,
     state,
@@ -609,5 +635,38 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     parentName,
     formAttrsNameInstance,
     children: React.isValidElement(children) ? React.cloneElement(children, { ...baseControl }) : children,
-  };
+  } as FairysValtioFormItemNoStyleAttrsReturn<T>;
+}
+
+export interface FairysValtioFormItemNoStyleAttrsReturn<T extends MObject<T> = Record<string, any>> {
+  /**表单项值*/
+  value?: any;
+  /**是否校验错误*/
+  isInvalid: boolean;
+  /**是否必填*/
+  isRequired: boolean;
+  /**错误信息*/
+  error?: string[];
+  /**值改变事件*/
+  onValueChange: (event: any) => void;
+  /**表单状态*/
+  state: T;
+  /**错误状态*/
+  errorState: Record<PropertyKey, string[]>;
+  /**表单实例*/
+  formInstance: FairysValtioFormInstance<T>;
+  /**拼接父级字段名后得到的表单项名称*/
+  _name?: string;
+  /**表单项名称*/
+  name?: string;
+  /**表单项ID*/
+  id?: string;
+  /**表单项路径*/
+  paths?: (string | number)[];
+  /**父级字段名*/
+  parentName?: string;
+  /**表单属性名实例*/
+  formAttrsNameInstance: FairysValtioFormParentAttrs;
+  /**子元素*/
+  children?: React.ReactNode;
 }

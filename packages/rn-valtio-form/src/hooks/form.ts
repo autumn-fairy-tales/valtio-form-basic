@@ -22,6 +22,12 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = Record<string
    * - immutable：直接使用对象(注意：当传递的不是`valtio`的`proxy`对象时，会使用`valtio`中的`proxy`声明)
    */
   initFormDataType?: 'deepCopy' | 'immutable';
+  /**
+   * 表单值改变时回调
+   * @param path 表单项路径
+   * @param value 表单项值
+   */
+  onValuesChange?: (path: PropertyKey, value: any) => void;
 }
 
 /**
@@ -32,10 +38,12 @@ export function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(
   props: FairysValtioFormAttrsProps<T>,
   ref: React.Ref<FairysValtioFormInstance<T>>,
 ) {
-  const { form, rules, formData, hideState, initFormDataType = 'deepCopy', ...rest } = props;
+  const { form, rules, formData, hideState, initFormDataType = 'deepCopy', onValuesChange, ...rest } = props;
   const formInstance = useFairysValtioFormInstance(form);
   /**表单规则*/
   formInstance.rules = rules;
+  /**表单值改变时回调*/
+  formInstance.onValuesChange = onValuesChange;
   /**初始化表单值*/
   useMemo(() => formInstance.ctor({ formData, hideState, initFormDataType }), []);
   useImperativeHandle(ref, () => formInstance);
@@ -44,7 +52,10 @@ export function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(
   return {
     ...rest,
     formInstance,
-  } as Omit<FairysValtioFormAttrsProps<T>, 'initFormDataType' | 'form' | 'rules' | 'formData' | 'hideState'> & {
+  } as Omit<
+    FairysValtioFormAttrsProps<T>,
+    'initFormDataType' | 'form' | 'rules' | 'formData' | 'hideState' | 'onValuesChange'
+  > & {
     formInstance: FairysValtioFormInstance<T>;
   };
 }

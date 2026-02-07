@@ -251,40 +251,9 @@ export const Form = (props: FormProps) => {
 }
  * ```
 */
-export declare function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): {
+export declare function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): Omit<FairysValtioFormAttrsProps<T>, "initFormDataType" | "form" | "rules" | "formData" | "hideState" | "onValuesChange"> & {
     formInstance: FairysValtioFormInstance<T>;
-    /**子元素*/
-    children: ReactNode;
-    gap?: string | number;
-    title?: React.ReactNode;
-    extra?: React.ReactNode;
-    isAllColSpan?: boolean;
-    className?: string;
-    style?: React.CSSProperties;
-    headerClassName?: string;
-    headerStyle?: React.CSSProperties;
-    bodyClassName?: string;
-    bodyStyle?: React.CSSProperties;
-    bordered?: boolean;
-    boxShadow?: boolean;
-    lastItemBordered?: boolean;
-    platform?: "pc" | "rn" | "taro";
-    colCount?: number;
-    errorLayout?: "bottom-left" | "bottom-right" | "top-right" | "top-left" | "left-border-top" | "right-border-top";
-    labelMode?: "left" | "top" | "between";
-    formItemClassName?: string;
-    formItemStyle?: React.CSSProperties;
-    formItemLabelClassName?: string;
-    formItemLabelStyle?: React.CSSProperties;
-    formItemBodyClassName?: string;
-    formItemBodyStyle?: React.CSSProperties;
-    itemBorderType?: "bottom" | "body" | "none";
-    itemBorderColor?: React.CSSProperties["borderColor"];
-    isInvalidBorderRed?: boolean;
-    isInvalidTextRed?: boolean;
-    showColon?: boolean;
 };
-
 ```
 
 ###  formItem
@@ -369,6 +338,10 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<st
     isJoinParentField?: boolean;
     /**校验规则*/
     rules?: RuleItem[];
+    /**卸载移除数据值
+     * @default true
+     */
+    isRemoveValueOnUnmount?: boolean;
 }
 
 ```
@@ -511,21 +484,40 @@ export const FormItem = (props: FormItemProps) => {
 }
  * ```
 */
-export declare function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormItemAttrsProps<T>): {
-    value: unknown;
-    error: string[];
+export declare function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormItemAttrsProps<T>): FairysValtioFormItemNoStyleAttrsReturn<T>;
+export interface FairysValtioFormItemNoStyleAttrsReturn<T extends MObject<T> = Record<string, any>> {
+    /**表单项值*/
+    value?: any;
+    /**是否校验错误*/
+    isInvalid: boolean;
+    /**是否必填*/
+    isRequired: boolean;
+    /**错误信息*/
+    error?: string[];
+    /**值改变事件*/
     onValueChange: (event: any) => void;
+    /**表单状态*/
     state: T;
+    /**错误状态*/
     errorState: Record<PropertyKey, string[]>;
+    /**表单实例*/
     formInstance: FairysValtioFormInstance<T>;
-    _name: string;
-    name: string;
-    id: string;
-    paths: (number | symbol)[] | (string | number)[];
-    parentName: string;
+    /**拼接父级字段名后得到的表单项名称*/
+    _name?: string;
+    /**表单项名称*/
+    name?: string;
+    /**表单项ID*/
+    id?: string;
+    /**表单项路径*/
+    paths?: (string | number)[];
+    /**父级字段名*/
+    parentName?: string;
+    /**表单属性名实例*/
     formAttrsNameInstance: FairysValtioFormParentAttrs;
-    children: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode>;
-};
+    /**子元素*/
+    children?: React.ReactNode;
+}
+
 ```
 
 ###  layout

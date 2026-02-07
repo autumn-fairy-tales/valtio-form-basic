@@ -68,5 +68,10 @@ export function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(
   return {
     ...rest,
     formInstance,
+  } as Omit<
+    FairysValtioFormAttrsProps<T>,
+    'initFormDataType' | 'form' | 'rules' | 'formData' | 'hideState' | 'onValuesChange'
+  > & {
+    formInstance: FairysValtioFormInstance<T>;
   };
 }
