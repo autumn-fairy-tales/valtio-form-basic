@@ -21,8 +21,11 @@ const Basice = () => {
     }
   };
 
+  const formState = FairysPCValtioForm.useFormInstanceToState(form);
+
   return (
     <div>
+      <div>用户名：{formState.username}</div>
       <FairysPCValtioForm<State>
         form={form}
         rules={{

@@ -19,6 +19,12 @@ import { RuleItem, ValidateFieldsError, Values } from 'async-validator';
 import { FairysValtioFormAttrsProps } from '../../form/form';
 /**表单实例*/
 export declare class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>> {
+    /**
+     * 表单值改变时回调
+     * @param path 表单项路径
+     * @param value 表单项值
+     */
+    onValuesChange?: (path: PropertyKey, value: any) => void;
     /***
      * 判断值是否为代理对象
      * @param value 值
@@ -50,6 +56,12 @@ export declare class FairysValtioFormInstance<T extends MObject<T> = Record<stri
      * @param value 值
      */
     updatedValueByPaths: (path: PropertyKey, value: any) => void;
+    /**表单项卸载移除保存值*/
+    removeValueByPaths: (path: PropertyKey) => void;
+    /**
+     * 清理值
+     */
+    clearValue: (fields?: PropertyKey[]) => this;
     /**
      * 更新行数据的隐藏信息
      * @param objectHideInfo 行数据隐藏信息对象
@@ -84,7 +96,7 @@ export declare class FairysValtioFormInstance<T extends MObject<T> = Record<stri
      * @param fields 要验证的字段(可选)
      * @param isReturn 是否返回验证结果(可选)
      */
-    validate: (fields?: PropertyKey[], isReturn?: boolean) => Promise<ValidateFieldsError | Values>;
+    validate: (fields?: PropertyKey[], isReturn?: boolean) => Promise<ValidateFieldsError | Values | Partial<T>>;
     /**
      * 验证某些前缀的字段
      * @param prefix 前缀字段数组
@@ -128,6 +140,23 @@ export declare function useFairysValtioFormInstanceContextState<T extends MObjec
 ```ts
 /**隐藏组件状态取值*/
 export declare function useFairysValtioFormInstanceContextHideState<T extends MObject<T> = Record<string, any>>(): [Record<PropertyKey, boolean>, FairysValtioFormInstance<T>, any];
+```
+***传递表单实例获取状态***
+
+```ts
+/**
+ * 传递表单实例获取状态
+ */
+export declare function useFairysValtioFormInstanceToState<T extends MObject<T> = Record<string, any>>(formInstance: FairysValtioFormInstance<T>): T;
+```
+***传递表单实例获取隐藏状态***
+
+```ts
+/**
+ * 传递表单实例获取隐藏状态
+ */
+export declare function useFairysValtioFormInstanceToHideState<T extends MObject<T> = Record<string, any>>(formInstance: FairysValtioFormInstance<T>): Record<PropertyKey, boolean>;
+
 ```
 
 
@@ -222,6 +251,12 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = Record<string
      * - immutable：直接使用对象(注意：当传递的不是`valtio`的`proxy`对象时，会使用`valtio`中的`proxy`声明)
      */
     initFormDataType?: 'deepCopy' | 'immutable';
+   /**
+     * 表单值改变时回调
+     * @param path 表单项路径
+     * @param value 表单项值
+     */
+    onValuesChange?: (path: PropertyKey, value: any) => void;
 }
 /**
  * 表单属性处理

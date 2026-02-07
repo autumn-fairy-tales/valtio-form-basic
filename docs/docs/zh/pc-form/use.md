@@ -126,8 +126,8 @@ interface State {
 
 const Cusotm = () => {
   const [formState] = FairysPCValtioForm.useFormState<State>();
-  return <span>{formState.username}</span>
-}
+  return <span>{formState.username}</span>;
+};
 
 const Basice = () => {
   const form = FairysPCValtioForm.useForm<State>();
@@ -140,21 +140,21 @@ const Basice = () => {
     }
   };
 
+  const formState = FairysPCValtioForm.useFormInstanceToState(form);
+
   return (
     <div>
+      <div>用户名：{formState.username}</div>
       <FairysPCValtioForm<State>
         form={form}
         rules={{
           username: [{ required: true, message: '请输入用户名' }],
         }}
       >
-        <FairysPCValtioForm.FormItem
-          label="用户名"
-          name="username"
-        >
+        <FairysPCValtioForm.FormItem label="用户名" name="username">
           <Input placeholder="请输入用户名" />
         </FairysPCValtioForm.FormItem>
-        <FairysPCValtioForm.FormHideItem label="监听数据渲染"  >
+        <FairysPCValtioForm.FormHideItem label="监听数据渲染">
           <Cusotm />
         </FairysPCValtioForm.FormHideItem>
       </FairysPCValtioForm>
@@ -164,4 +164,5 @@ const Basice = () => {
 };
 
 export default Basice;
+
 ```

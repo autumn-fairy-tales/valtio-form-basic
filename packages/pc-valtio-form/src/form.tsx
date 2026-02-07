@@ -78,13 +78,13 @@ FairysPCValtioForm.useFormState = useFairysValtioFormInstanceContextState;
 FairysPCValtioForm.useFormHideState = useFairysValtioFormInstanceContextHideState;
 /**获取上下文实例*/
 FairysPCValtioForm.useFormInstance = useFairysValtioFormInstanceContext;
-/**传递表单实例获取状态*/
-FairysPCValtioForm.useFormInstanceToState = useFairysValtioFormInstanceToState;
-/**传递表单实例获取隐藏状态*/
-FairysPCValtioForm.useFormInstanceToHideState = useFairysValtioFormInstanceToHideState;
 /**表单项基础组件*/
 FairysPCValtioForm.FormItemBase = FairysPCValtioFormItemBase;
 /**表单项*/
 FairysPCValtioForm.FormItem = FairysPCValtioFormItem;
 /**隐藏表单想*/
 FairysPCValtioForm.FormHideItem = FairysPCValtioFormHideItem;
+/**传递表单实例获取状态*/
+FairysPCValtioForm.useFormInstanceToState = useFairysValtioFormInstanceToState;
+/**传递表单实例获取隐藏状态*/
+FairysPCValtioForm.useFormInstanceToHideState = useFairysValtioFormInstanceToHideState;

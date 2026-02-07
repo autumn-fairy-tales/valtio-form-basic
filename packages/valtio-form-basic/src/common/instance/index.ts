@@ -52,25 +52,26 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
     initFormDataType?: FairysValtioFormAttrsProps['initFormDataType'];
   }) => {
     const { formData, hideState, initFormDataType = 'deepCopy' } = options || {};
-    this.mountRules = {}; //由表单项挂载规则,(根据表单项的字段存储路径对应校验规则)
-    this.nameToPaths = {}; //表单项名称到路径映射
-    // 如果是 isProxy,则直接赋值
-    this.errorState = proxy<Record<PropertyKey, string[]>>({});
-    this.hideState = proxy<Record<PropertyKey, boolean>>(hideState ? copy(hideState) : {});
+    this.clear();
+    this.updatedHideInfo(hideState ? copy(hideState) : {});
     // 判断是否是代理对象
     const isValtioProxy = this.isValtioProxy(formData);
     if (isValtioProxy) {
       if (initFormDataType === 'deepCopy') {
-        this.state = proxy(copy(snapshot(formData)) as T);
+        // this.state = proxy(copy(snapshot(formData)) as T);
+        this.updated(copy(snapshot(formData)) as T, false);
       } else {
-        this.state = formData as T;
+        // this.state = formData as T;
+        this.updated(formData as T, false);
       }
     } else {
       if (initFormDataType === 'deepCopy') {
-        this.state = proxy(copy(formData || {}) as T);
+        // this.state = proxy(copy(formData || {}) as T);
+        this.updated(copy(formData || {}) as T, false);
       }
       {
-        this.state = proxy((formData || {}) as T);
+        // this.state = proxy((formData || {}) as T);
+        this.updated((formData || {}) as T, false);
       }
     }
   };
@@ -103,6 +104,20 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
   /**表单项卸载移除保存值*/
   removeValueByPaths = (path: PropertyKey) => {
     removeValueByPaths(this.state, formatePath(path));
+  };
+  /**
+   * 清理值
+   */
+  clearValue = (fields?: PropertyKey[]) => {
+    let _fields = fields;
+    if (!Array.isArray(fields)) {
+      _fields = Object.keys(this.state) as PropertyKey[];
+    }
+    for (let index = 0; index < _fields.length; index++) {
+      const field = _fields[index];
+      delete this.state[field];
+    }
+    return this;
   };
 
   // ===================================================隐藏状态================================================================
@@ -167,9 +182,9 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
    * 清理所有数据
    */
   clear = () => {
-    this.state = proxy<T>({} as T); //表单值
-    this.errorState = proxy<Record<PropertyKey, string[]>>({}); //错误信息
-    this.hideState = proxy<Record<PropertyKey, boolean>>({}); //隐藏状态
+    this.clearValue();
+    this.clearHideInfo();
+    this.clearErrorInfo();
     this.mountRules = {}; //由表单项挂载规则,(根据表单项的字段存储路径对应校验规则)
     this.rules = {}; //表单项规则
     this.nameToPaths = {}; //表单项名称到路径映射
@@ -315,7 +330,6 @@ export function useFairysValtioFormInstanceContextHideState<T extends MObject<T>
     any,
   ];
 }
-
 /**
  * 传递表单实例获取状态
  */
