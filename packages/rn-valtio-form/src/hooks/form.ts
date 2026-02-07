@@ -4,7 +4,8 @@ import { useMemo, type ReactNode, useImperativeHandle, useEffect } from 'react';
 import { FairysValtioFormLayoutAttrsProps } from './layout';
 import { RuleItem } from 'async-validator';
 
-export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> extends FairysValtioFormLayoutAttrsProps {
+export interface FairysValtioFormAttrsProps<T extends MObject<T> = Record<string, any>>
+  extends FairysValtioFormLayoutAttrsProps {
   /**表单实例*/
   form?: FairysValtioFormInstance<T>;
   /**子元素*/
@@ -27,7 +28,7 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> exten
  * 表单属性处理
  *
  */
-export function useFairysValtioForm<T extends MObject<T> = object>(
+export function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(
   props: FairysValtioFormAttrsProps<T>,
   ref: React.Ref<FairysValtioFormInstance<T>>,
 ) {

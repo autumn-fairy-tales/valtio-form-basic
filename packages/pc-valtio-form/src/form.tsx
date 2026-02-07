@@ -15,9 +15,10 @@ import React from 'react';
 export * from '@fairys/valtio-form-basic';
 export * from './form.item';
 export * from './layout';
-export interface FairysPCValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
+export interface FairysPCValtioFormProps<T extends MObject<T> = Record<string, any>>
+  extends FairysValtioFormAttrsProps<T> {}
 
-function FairysPCValtioFormBase<T extends MObject<T> = object>(
+function FairysPCValtioFormBase<T extends MObject<T> = Record<string, any>>(
   props: FairysPCValtioFormProps<T>,
   ref: React.Ref<FairysValtioFormInstance<T>>,
 ) {

@@ -15,9 +15,10 @@ import type { FairysValtioFormAttrsProps } from 'hooks/form';
 import { useFairysValtioForm } from 'hooks/form';
 import React from 'react';
 
-export interface FairysRNValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
+export interface FairysRNValtioFormProps<T extends MObject<T> = Record<string, any>>
+  extends FairysValtioFormAttrsProps<T> {}
 
-function FairysRNValtioFormBase<T extends MObject<T> = object>(
+function FairysRNValtioFormBase<T extends MObject<T> = Record<string, any>>(
   props: FairysRNValtioFormProps<T>,
   ref: React.Ref<FairysValtioFormInstance<T>>,
 ) {

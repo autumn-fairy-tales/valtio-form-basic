@@ -19,20 +19,20 @@ export declare function FairysPCValtioFormLayout(props: FairysPCValtioFormLayout
 ```ts
 /**表单项*/
 import type { FairysValtioFormItemAttrsProps, MObject } from '@fairys/valtio-form-basic';
-export interface FairysPCValtioFormItemProps<T extends MObject<T> = object> extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, FairysValtioFormItemAttrsProps {
+export interface FairysPCValtioFormItemProps<T extends MObject<T> = Record<string, any>> extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, FairysValtioFormItemAttrsProps {
     /**是否使用控制隐藏的表单项*/
     isHide?: boolean;
     /**是否使用无样式表单项*/
     noStyle?: boolean;
 }
 /**普通表单项*/
-export declare function FairysPCValtioFormItemBase<T extends MObject<T> = object>(props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysPCValtioFormItemBase<T extends MObject<T> = Record<string, any>>(props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
 /**控制隐藏的表单项*/
-export declare function FairysPCValtioFormHideItem<T extends MObject<T> = object>(props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysPCValtioFormHideItem<T extends MObject<T> = Record<string, any>>(props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
 /**无样式表单项*/
-export declare function FairysPCValtioFormItemNoStyle<T extends MObject<T> = object>(props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysPCValtioFormItemNoStyle<T extends MObject<T> = Record<string, any>>(props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
 /**表单项基础组件(根据isHide和noStyle判断是否使用控制隐藏的表单项和无样式表单项)*/
-export declare function FairysPCValtioFormItem<T extends MObject<T> = object>(props: FairysPCValtioFormItemProps<T>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysPCValtioFormItem<T extends MObject<T> = Record<string, any>>(props: FairysPCValtioFormItemProps<T>): import("react/jsx-runtime").JSX.Element;
 ```
 
 **表单**
@@ -41,9 +41,9 @@ export declare function FairysPCValtioFormItem<T extends MObject<T> = object>(pr
 import { FairysPCValtioFormItem, FairysPCValtioFormHideItem, FairysPCValtioFormItemBase } from './form.item';
 import { useFairysValtioFormInstance, useFairysValtioFormInstanceContext, useFairysValtioFormInstanceContextState, useFairysValtioFormInstanceContextHideState } from '@fairys/valtio-form-basic';
 import type { FairysValtioFormAttrsProps, FairysValtioFormInstance, MObject } from '@fairys/valtio-form-basic';
-export interface FairysPCValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
+export interface FairysPCValtioFormProps<T extends MObject<T> = Record<string, any>> extends FairysValtioFormAttrsProps<T> {}
 
-declare function FairysPCValtioFormBase<T extends MObject<T> = object>(props: FairysPCValtioFormProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): import("react/jsx-runtime").JSX.Element;
+declare function FairysPCValtioFormBase<T extends MObject<T> = Record<string, any>>(props: FairysPCValtioFormProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): import("react/jsx-runtime").JSX.Element;
 
 export declare const FairysPCValtioForm: typeof FairysPCValtioFormBase & {
     /**初始化实例*/

@@ -61,9 +61,9 @@ import {
 } from '@fairys/valtio-form-basic';
 import type { FairysValtioFormAttrsProps, FairysValtioFormInstance, MObject } from '@fairys/valtio-form-basic';
 
-export interface FormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {}
+export interface FormProps<T extends MObject<T> = Record<string, any>> extends FairysValtioFormAttrsProps<T> {}
 
-function FormBase<T extends MObject<T> = object>(
+function FormBase<T extends MObject<T> = Record<string, any>>(
   props: FormProps<T>,
   ref: React.Ref<FairysValtioFormInstance<T>>,
 ) {
@@ -108,7 +108,7 @@ import {
   FairysValtioFormParentAttrsContext,
 } from '@fairys/valtio-form-basic';
 
-export interface FormItemProps<T extends MObject<T> = object>
+export interface FormItemProps<T extends MObject<T> = Record<string, any>>
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
     FairysValtioFormItemAttrsProps {
   /**是否使用控制隐藏的表单项*/
@@ -118,7 +118,7 @@ export interface FormItemProps<T extends MObject<T> = object>
 }
 
 /**普通表单项*/
-export function FormItemBase<T extends MObject<T> = object>(
+export function FormItemBase<T extends MObject<T> = Record<string, any>>(
   props: Omit<FormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const { label, extra, helpText } = props;
@@ -164,7 +164,7 @@ export function FormItemBase<T extends MObject<T> = object>(
   );
 }
 /**控制隐藏的表单项*/
-export function FormHideItem<T extends MObject<T> = object>(
+export function FormHideItem<T extends MObject<T> = Record<string, any>>(
   props: Omit<FormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const [state] = useFairysValtioFormInstanceContextHideState();
@@ -176,7 +176,7 @@ export function FormHideItem<T extends MObject<T> = object>(
 }
 
 /**无样式表单项*/
-export function FormItemNoStyle<T extends MObject<T> = object>(
+export function FormItemNoStyle<T extends MObject<T> = Record<string, any>>(
   props: Omit<FormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const { children, formAttrsNameInstance } = useFairysValtioFormItemNoStyleAttrs(props);
@@ -188,7 +188,7 @@ export function FormItemNoStyle<T extends MObject<T> = object>(
 }
 
 /**表单项基础组件(根据isHide和noStyle判断是否使用控制隐藏的表单项和无样式表单项)*/
-export function FormItem<T extends MObject<T> = object>(props: FormItemProps<T>) {
+export function FormItem<T extends MObject<T> = Record<string, any>>(props: FormItemProps<T>) {
   const { isHide, noStyle, ...rest } = props;
   if (isHide) {
     return <FormHideItem<T> {...rest} />;

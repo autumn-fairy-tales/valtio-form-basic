@@ -17,7 +17,7 @@ import {
 import { formItemStyles } from 'styles/form.item';
 import { FairysValtioFormLayoutContextOptions, useFairysValtioFormLayoutContext } from './layout';
 
-export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object>
+export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<string, any>>
   extends Omit<
     _FairysValtioFormItemAttrsProps<T>,
     'style' | 'labelStyle' | 'bodyStyle' | 'rowSpan' | 'className' | 'labelClassName' | 'bodyClassName'
@@ -35,7 +35,9 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object>
  * 处理表单表单项属性
  *
  */
-export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(props: FairysValtioFormItemAttrsProps<T>) {
+export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<string, any>>(
+  props: FairysValtioFormItemAttrsProps<T>,
+) {
   const [layoutAttrs] = useFairysValtioFormLayoutContext();
   const colCount = layoutAttrs.colCount || 1;
   const parent_borderedType = layoutAttrs.itemBorderType || 'bottom';
@@ -294,7 +296,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   } as FairysValtioFormItemAttrsReturn<T>;
 }
 
-export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> {
+export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = Record<string, any>> {
   /**表单项值*/
   value?: any;
   /**是否校验错误*/
@@ -364,7 +366,7 @@ export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> 
 /**
  * 没有样式的表单项属性，仅返回基础输入组件参数
  */
-export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = object>(
+export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Record<string, any>>(
   props: FairysValtioFormItemAttrsProps<T>,
 ) {
   const {
@@ -477,7 +479,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
   } as FairysValtioFormItemNoStyleAttrsReturn<T>;
 }
 
-export interface FairysValtioFormItemNoStyleAttrsReturn<T extends MObject<T> = object> {
+export interface FairysValtioFormItemNoStyleAttrsReturn<T extends MObject<T> = Record<string, any>> {
   /**表单项值*/
   value?: any;
   /**是否校验错误*/

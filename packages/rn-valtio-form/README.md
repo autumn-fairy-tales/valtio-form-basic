@@ -98,7 +98,7 @@ import { ViewProps } from 'react-native';
 import type { MObject, FairysValtioFormItemAttrsProps as _FairysValtioFormItemAttrsProps } from '@fairys/valtio-form-basic';
 import { FairysValtioFormInstance, FairysValtioFormParentAttrs } from '@fairys/valtio-form-basic/esm/common';
 import { FairysValtioFormLayoutContextOptions } from './layout';
-export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> extends Omit<_FairysValtioFormItemAttrsProps<T>, 'style' | 'labelStyle' | 'bodyStyle' | 'rowSpan' | 'className' | 'labelClassName' | 'bodyClassName'> {
+export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<string, any>> extends Omit<_FairysValtioFormItemAttrsProps<T>, 'style' | 'labelStyle' | 'bodyStyle' | 'rowSpan' | 'className' | 'labelClassName' | 'bodyClassName'> {
     style?: ViewProps['style'];
     labelStyle?: ViewProps['style'];
     bodyStyle?: ViewProps['style'];
@@ -107,8 +107,8 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> e
  * 处理表单表单项属性
  *
 */
-export declare function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(props: FairysValtioFormItemAttrsProps<T>): FairysValtioFormItemAttrsReturn<T>;
-export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> {
+export declare function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormItemAttrsProps<T>): FairysValtioFormItemAttrsReturn<T>;
+export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = Record<string, any>> {
     /**表单项值*/
     value?: any;
     /**是否校验错误*/
@@ -176,8 +176,8 @@ export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> 
 /**
  * 没有样式的表单项属性，仅返回基础输入组件参数
 */
-export declare function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = object>(props: FairysValtioFormItemAttrsProps<T>): FairysValtioFormItemNoStyleAttrsReturn<T>;
-export interface FairysValtioFormItemNoStyleAttrsReturn<T extends MObject<T> = object> {
+export declare function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormItemAttrsProps<T>): FairysValtioFormItemNoStyleAttrsReturn<T>;
+export interface FairysValtioFormItemNoStyleAttrsReturn<T extends MObject<T> = Record<string, any>> {
     /**表单项值*/
     value?: any;
     /**是否校验错误*/
@@ -219,7 +219,7 @@ import { FairysValtioFormInstance } from '@fairys/valtio-form-basic/esm/common';
 import { type ReactNode } from 'react';
 import { FairysValtioFormLayoutAttrsProps } from './layout';
 import { RuleItem } from 'async-validator';
-export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> extends FairysValtioFormLayoutAttrsProps {
+export interface FairysValtioFormAttrsProps<T extends MObject<T> = Record<string, any>> extends FairysValtioFormLayoutAttrsProps {
     /**表单实例*/
     form?: FairysValtioFormInstance<T>;
     /**子元素*/
@@ -240,7 +240,7 @@ export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> exten
 /**
  * 表单属性处理
 */
-export declare function useFairysValtioForm<T extends MObject<T> = object>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): Omit<FairysValtioFormAttrsProps<T>, "initFormDataType" | "form" | "rules" | "formData" | "hideState"> & {
+export declare function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): Omit<FairysValtioFormAttrsProps<T>, "initFormDataType" | "form" | "rules" | "formData" | "hideState"> & {
     formInstance: FairysValtioFormInstance<T>;
 };
 
@@ -266,20 +266,20 @@ export declare function FairysRNValtioFormLayout(props: FairysRNValtioFormLayout
 import type { ViewProps } from 'react-native';
 import type { MObject } from '@fairys/valtio-form-basic';
 import type { FairysValtioFormItemAttrsProps } from './hooks/form.item';
-export interface FairysRNValtioFormItemProps<T extends MObject<T> = object> extends Omit<ViewProps, 'style'>, FairysValtioFormItemAttrsProps {
+export interface FairysRNValtioFormItemProps<T extends MObject<T> = Record<string, any>> extends Omit<ViewProps, 'style'>, FairysValtioFormItemAttrsProps {
     /**是否使用控制隐藏的表单项*/
     isHide?: boolean;
     /**是否使用无样式表单项*/
     noStyle?: boolean;
 }
 /**普通表单项*/
-export declare function FairysRNValtioFormItemBase<T extends MObject<T> = object>(props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysRNValtioFormItemBase<T extends MObject<T> = Record<string, any>>(props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
 /**控制隐藏的表单项*/
-export declare function FairysRNValtioFormHideItem<T extends MObject<T> = object>(props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysRNValtioFormHideItem<T extends MObject<T> = Record<string, any>>(props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
 /**无样式表单项*/
-export declare function FairysRNValtioFormItemNoStyle<T extends MObject<T> = object>(props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysRNValtioFormItemNoStyle<T extends MObject<T> = Record<string, any>>(props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>): import("react/jsx-runtime").JSX.Element;
 /**表单项基础组件(根据isHide和noStyle判断是否使用控制隐藏的表单项和无样式表单项)*/
-export declare function FairysRNValtioFormItem<T extends MObject<T> = object>(props: FairysRNValtioFormItemProps<T>): import("react/jsx-runtime").JSX.Element;
+export declare function FairysRNValtioFormItem<T extends MObject<T> = Record<string, any>>(props: FairysRNValtioFormItemProps<T>): import("react/jsx-runtime").JSX.Element;
 
 ```
 
@@ -291,9 +291,9 @@ import { FairysRNValtioFormItem, FairysRNValtioFormHideItem, FairysRNValtioFormI
 import { useFairysValtioFormInstance, useFairysValtioFormInstanceContext, useFairysValtioFormInstanceContextState, useFairysValtioFormInstanceContextHideState } from '@fairys/valtio-form-basic/esm/common';
 import type { FairysValtioFormInstance, MObject } from '@fairys/valtio-form-basic/esm/common';
 import type { FairysValtioFormAttrsProps } from './hooks/form';
-export interface FairysRNValtioFormProps<T extends MObject<T> = object> extends FairysValtioFormAttrsProps<T> {
+export interface FairysRNValtioFormProps<T extends MObject<T> = Record<string, any>> extends FairysValtioFormAttrsProps<T> {
 }
-declare function FairysRNValtioFormBase<T extends MObject<T> = object>(props: FairysRNValtioFormProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): import("react/jsx-runtime").JSX.Element;
+declare function FairysRNValtioFormBase<T extends MObject<T> = Record<string, any>>(props: FairysRNValtioFormProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): import("react/jsx-runtime").JSX.Element;
 export declare const FairysRNValtioForm: typeof FairysRNValtioFormBase & {
     /**初始化实例*/
     useForm: typeof useFairysValtioFormInstance;

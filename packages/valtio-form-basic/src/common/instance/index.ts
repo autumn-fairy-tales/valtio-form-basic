@@ -190,7 +190,10 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
    * @param fields 要验证的字段(可选)
    * @param isReturn 是否返回验证结果(可选)
    */
-  validate = async (fields?: PropertyKey[], isReturn: boolean = true): Promise<ValidateFieldsError | Values> => {
+  validate = async (
+    fields?: PropertyKey[],
+    isReturn: boolean = true,
+  ): Promise<ValidateFieldsError | Values | Partial<T>> => {
     const rules = {
       ...this.rules,
       ...this.mountRules,
@@ -264,7 +267,9 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
 }
 
 /**声明实例*/
-export function useFairysValtioFormInstance<T extends MObject<T> = object>(instance?: FairysValtioFormInstance<T>) {
+export function useFairysValtioFormInstance<T extends MObject<T> = Record<string, any>>(
+  instance?: FairysValtioFormInstance<T>,
+) {
   const ref = useRef<FairysValtioFormInstance<T>>();
   if (!ref.current) {
     if (instance) {
@@ -282,12 +287,12 @@ export const FairysValtioFormInstanceContext = createContext<FairysValtioFormIns
 );
 
 /**表单实例上下文*/
-export function useFairysValtioFormInstanceContext<T extends MObject<T> = object>() {
+export function useFairysValtioFormInstanceContext<T extends MObject<T> = Record<string, any>>() {
   return useContext(FairysValtioFormInstanceContext) as FairysValtioFormInstance<T>;
 }
 
 /**状态取值*/
-export function useFairysValtioFormInstanceContextState<T extends MObject<T> = object>() {
+export function useFairysValtioFormInstanceContextState<T extends MObject<T> = Record<string, any>>() {
   const instance = useFairysValtioFormInstanceContext<T>();
   const state = useSnapshot(instance.state) as T;
   const errorState = useSnapshot(instance.errorState) as Record<PropertyKey, string[]>;
@@ -301,7 +306,7 @@ export function useFairysValtioFormInstanceContextState<T extends MObject<T> = o
 }
 
 /**隐藏组件状态取值*/
-export function useFairysValtioFormInstanceContextHideState<T extends MObject<T> = object>() {
+export function useFairysValtioFormInstanceContextHideState<T extends MObject<T> = Record<string, any>>() {
   const instance = useFairysValtioFormInstanceContext<T>();
   const hideState = useSnapshot(instance.hideState) as Record<PropertyKey, boolean>;
   return [hideState, instance, (hideState as any).__defaultValue] as [
@@ -314,7 +319,7 @@ export function useFairysValtioFormInstanceContextHideState<T extends MObject<T>
 /**
  * 传递表单实例获取状态
  */
-export function useFairysValtioFormInstanceToState<T extends MObject<T> = object>(
+export function useFairysValtioFormInstanceToState<T extends MObject<T> = Record<string, any>>(
   formInstance: FairysValtioFormInstance<T>,
 ) {
   const state = useSnapshot(formInstance.state) as T;
@@ -323,7 +328,7 @@ export function useFairysValtioFormInstanceToState<T extends MObject<T> = object
 /**
  * 传递表单实例获取隐藏状态
  */
-export function useFairysValtioFormInstanceToHideState<T extends MObject<T> = object>(
+export function useFairysValtioFormInstanceToHideState<T extends MObject<T> = Record<string, any>>(
   formInstance: FairysValtioFormInstance<T>,
 ) {
   const hideState = useSnapshot(formInstance.hideState) as Record<PropertyKey, boolean>;

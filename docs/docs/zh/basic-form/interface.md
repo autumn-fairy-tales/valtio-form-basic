@@ -99,7 +99,7 @@ export declare class FairysValtioFormInstance<T extends MObject<T> = Record<stri
 
 ```ts
 /**声明实例*/
-export declare function useFairysValtioFormInstance<T extends MObject<T> = object>(instance?: FairysValtioFormInstance<T>): FairysValtioFormInstance<T>;
+export declare function useFairysValtioFormInstance<T extends MObject<T> = Record<string, any>>(instance?: FairysValtioFormInstance<T>): FairysValtioFormInstance<T>;
 ```
 
 ***表单实例上下文***
@@ -113,21 +113,21 @@ export declare const FairysValtioFormInstanceContext: import("react").Context<Fa
 
 ```ts
 /**获取表单实例上下文*/
-export declare function useFairysValtioFormInstanceContext<T extends MObject<T> = object>(): FairysValtioFormInstance<T>;
+export declare function useFairysValtioFormInstanceContext<T extends MObject<T> = Record<string, any>>(): FairysValtioFormInstance<T>;
 ```
 
 ***状态取值***
 
 ```ts
 /**状态取值*/
-export declare function useFairysValtioFormInstanceContextState<T extends MObject<T> = object>(): [T, Record<PropertyKey, string[]>, FairysValtioFormInstance<T>, any, any];
+export declare function useFairysValtioFormInstanceContextState<T extends MObject<T> = Record<string, any>>(): [T, Record<PropertyKey, string[]>, FairysValtioFormInstance<T>, any, any];
 ```
 
 ***隐藏组件状态取值***
 
 ```ts
 /**隐藏组件状态取值*/
-export declare function useFairysValtioFormInstanceContextHideState<T extends MObject<T> = object>(): [Record<PropertyKey, boolean>, FairysValtioFormInstance<T>, any];
+export declare function useFairysValtioFormInstanceContextHideState<T extends MObject<T> = Record<string, any>>(): [Record<PropertyKey, boolean>, FairysValtioFormInstance<T>, any];
 ```
 
 
@@ -205,7 +205,7 @@ import { FairysValtioFormInstance } from '../common/instance';
 import { type ReactNode } from 'react';
 import { FairysValtioFormLayoutAttrsProps } from './layout';
 import { RuleItem } from 'async-validator';
-export interface FairysValtioFormAttrsProps<T extends MObject<T> = object> extends FairysValtioFormLayoutAttrsProps {
+export interface FairysValtioFormAttrsProps<T extends MObject<T> = Record<string, any>> extends FairysValtioFormLayoutAttrsProps {
     /**表单实例*/
     form?: FairysValtioFormInstance<T>;
     /**子元素*/
@@ -243,7 +243,7 @@ export const Form = (props: FormProps) => {
 }
  * ```
 */
-export declare function useFairysValtioForm<T extends MObject<T> = object>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): {
+export declare function useFairysValtioForm<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormAttrsProps<T>, ref: React.Ref<FairysValtioFormInstance<T>>): {
     formInstance: FairysValtioFormInstance<T>;
     /**子元素*/
     children: ReactNode;
@@ -289,7 +289,7 @@ import { FairysValtioFormInstance } from '../common/instance';
 import { FairysValtioFormLayoutContextOptions } from './layout';
 import { FairysValtioFormParentAttrs } from '../common/hooks';
 import { RuleItem } from 'async-validator';
-export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> {
+export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<string, any>> {
     /**平台*/
     platform?: 'pc' | 'rn' | 'taro';
     /**
@@ -411,8 +411,8 @@ export const FormItem = (props: FormItemProps) => {
  * ```
  *
 */
-export declare function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(props: FairysValtioFormItemAttrsProps<T>): FairysValtioFormItemAttrsReturn<T>;
-export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> {
+export declare function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormItemAttrsProps<T>): FairysValtioFormItemAttrsReturn<T>;
+export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = Record<string, any>> {
     /**表单项值*/
     value?: any;
     /**是否校验错误*/
@@ -503,7 +503,7 @@ export const FormItem = (props: FormItemProps) => {
 }
  * ```
 */
-export declare function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = object>(props: FairysValtioFormItemAttrsProps<T>): {
+export declare function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Record<string, any>>(props: FairysValtioFormItemAttrsProps<T>): {
     value: unknown;
     error: string[];
     onValueChange: (event: any) => void;

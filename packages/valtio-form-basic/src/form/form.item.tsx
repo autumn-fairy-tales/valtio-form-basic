@@ -9,7 +9,7 @@ import { FairysValtioFormParentAttrs, useFairysValtioFormAttrsName, useId } from
 import { formatePath, get } from 'common/utils';
 import { RuleItem } from 'async-validator';
 
-export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> {
+export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<string, any>> {
   /**平台*/
   platform?: 'pc' | 'rn' | 'taro';
   /**
@@ -131,7 +131,9 @@ export const FormItem = (props: FormItemProps) => {
  * ```
  * 
 */
-export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(props: FairysValtioFormItemAttrsProps<T>) {
+export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<string, any>>(
+  props: FairysValtioFormItemAttrsProps<T>,
+) {
   const [layoutAttrs] = useFairysValtioFormLayoutContext();
   const colCount = layoutAttrs.colCount || 1;
   const parent_borderedType = layoutAttrs.itemBorderType || 'bottom';
@@ -434,7 +436,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
   } as FairysValtioFormItemAttrsReturn<T>;
 }
 
-export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = object> {
+export interface FairysValtioFormItemAttrsReturn<T extends MObject<T> = Record<string, any>> {
   /**表单项值*/
   value?: any;
   /**是否校验错误*/
@@ -521,7 +523,7 @@ export const FormItem = (props: FormItemProps) => {
 }
  * ```
 */
-export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = object>(
+export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Record<string, any>>(
   props: FairysValtioFormItemAttrsProps<T>,
 ) {
   const {

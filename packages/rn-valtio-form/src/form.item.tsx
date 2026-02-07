@@ -12,9 +12,9 @@ import { formItemStyles } from './styles/form.item';
 import type { FairysValtioFormItemAttrsProps } from './hooks/form.item';
 import { useFairysValtioFormItemAttrs, useFairysValtioFormItemNoStyleAttrs } from 'hooks/form.item';
 
-export interface FairysRNValtioFormItemProps<T extends MObject<T> = object>
+export interface FairysRNValtioFormItemProps<T extends MObject<T> = Record<string, any>>
   extends Omit<ViewProps, 'style'>,
-    FairysValtioFormItemAttrsProps {
+    FairysValtioFormItemAttrsProps<T> {
   /**是否使用控制隐藏的表单项*/
   isHide?: boolean;
   /**是否使用无样式表单项*/
@@ -22,7 +22,7 @@ export interface FairysRNValtioFormItemProps<T extends MObject<T> = object>
 }
 
 /**普通表单项*/
-export function FairysRNValtioFormItemBase<T extends MObject<T> = object>(
+export function FairysRNValtioFormItemBase<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const { label, extra, helpText } = props;
@@ -99,7 +99,7 @@ export function FairysRNValtioFormItemBase<T extends MObject<T> = object>(
   );
 }
 /**控制隐藏的表单项*/
-export function FairysRNValtioFormHideItem<T extends MObject<T> = object>(
+export function FairysRNValtioFormHideItem<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const [state] = useFairysValtioFormInstanceContextHideState();
@@ -111,7 +111,7 @@ export function FairysRNValtioFormHideItem<T extends MObject<T> = object>(
 }
 
 /**无样式表单项*/
-export function FairysRNValtioFormItemNoStyle<T extends MObject<T> = object>(
+export function FairysRNValtioFormItemNoStyle<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const { children, formAttrsNameInstance } = useFairysValtioFormItemNoStyleAttrs(props);
@@ -123,7 +123,9 @@ export function FairysRNValtioFormItemNoStyle<T extends MObject<T> = object>(
 }
 
 /**表单项基础组件(根据isHide和noStyle判断是否使用控制隐藏的表单项和无样式表单项)*/
-export function FairysRNValtioFormItem<T extends MObject<T> = object>(props: FairysRNValtioFormItemProps<T>) {
+export function FairysRNValtioFormItem<T extends MObject<T> = Record<string, any>>(
+  props: FairysRNValtioFormItemProps<T>,
+) {
   const { isHide, noStyle, ...rest } = props;
   if (isHide) {
     return <FairysRNValtioFormHideItem<T> {...rest} />;

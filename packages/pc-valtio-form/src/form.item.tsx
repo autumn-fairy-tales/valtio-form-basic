@@ -9,9 +9,9 @@ import {
   FairysValtioFormParentAttrsContext,
 } from '@fairys/valtio-form-basic';
 
-export interface FairysPCValtioFormItemProps<T extends MObject<T> = object>
+export interface FairysPCValtioFormItemProps<T extends MObject<T> = Record<string, any>>
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    FairysValtioFormItemAttrsProps {
+    FairysValtioFormItemAttrsProps<T> {
   /**是否使用控制隐藏的表单项*/
   isHide?: boolean;
   /**是否使用无样式表单项*/
@@ -19,7 +19,7 @@ export interface FairysPCValtioFormItemProps<T extends MObject<T> = object>
 }
 
 /**普通表单项*/
-export function FairysPCValtioFormItemBase<T extends MObject<T> = object>(
+export function FairysPCValtioFormItemBase<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const { label, extra, helpText } = props;
@@ -65,7 +65,7 @@ export function FairysPCValtioFormItemBase<T extends MObject<T> = object>(
   );
 }
 /**控制隐藏的表单项*/
-export function FairysPCValtioFormHideItem<T extends MObject<T> = object>(
+export function FairysPCValtioFormHideItem<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const [state] = useFairysValtioFormInstanceContextHideState();
@@ -77,7 +77,7 @@ export function FairysPCValtioFormHideItem<T extends MObject<T> = object>(
 }
 
 /**无样式表单项*/
-export function FairysPCValtioFormItemNoStyle<T extends MObject<T> = object>(
+export function FairysPCValtioFormItemNoStyle<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
 ) {
   const { children, formAttrsNameInstance } = useFairysValtioFormItemNoStyleAttrs(props);
@@ -89,7 +89,9 @@ export function FairysPCValtioFormItemNoStyle<T extends MObject<T> = object>(
 }
 
 /**表单项基础组件(根据isHide和noStyle判断是否使用控制隐藏的表单项和无样式表单项)*/
-export function FairysPCValtioFormItem<T extends MObject<T> = object>(props: FairysPCValtioFormItemProps<T>) {
+export function FairysPCValtioFormItem<T extends MObject<T> = Record<string, any>>(
+  props: FairysPCValtioFormItemProps<T>,
+) {
   const { isHide, noStyle, ...rest } = props;
   if (isHide) {
     return <FairysPCValtioFormHideItem<T> {...rest} />;
