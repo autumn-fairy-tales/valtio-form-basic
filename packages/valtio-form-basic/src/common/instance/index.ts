@@ -3,11 +3,17 @@ import { createContext, useContext, useRef } from 'react';
 import { proxy, ref, snapshot, useSnapshot, unstable_getInternalStates } from 'valtio';
 import AsyncValidator, { RuleItem, ValidateFieldsError, Values } from 'async-validator';
 import { copy } from 'fast-copy';
-import { formatePath, get, set, isObject } from 'common/utils';
+import { formatePath, get, set, isObject, removeValueByPaths } from 'common/utils';
 import { FairysValtioFormAttrsProps } from 'form/form';
 
 /**表单实例*/
 export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>> {
+  /**
+   * 表单值改变时回调
+   * @param path 表单项路径
+   * @param value 表单项值
+   */
+  onValuesChange?: (path: PropertyKey, value: any) => void;
   /***
    * 判断值是否为代理对象
    * @param value 值
@@ -91,7 +97,14 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
   updatedValueByPaths = (path: PropertyKey, value: any) => {
     set(this.state, formatePath(path), value);
     this.validate([path], false);
+    this.onValuesChange?.(path, value);
   };
+
+  /**表单项卸载移除保存值*/
+  removeValueByPaths = (path: PropertyKey) => {
+    removeValueByPaths(this.state, formatePath(path));
+  };
+
   // ===================================================隐藏状态================================================================
   /**
    * 更新行数据的隐藏信息
@@ -296,4 +309,23 @@ export function useFairysValtioFormInstanceContextHideState<T extends MObject<T>
     FairysValtioFormInstance<T>,
     any,
   ];
+}
+
+/**
+ * 传递表单实例获取状态
+ */
+export function useFairysValtioFormInstanceToState<T extends MObject<T> = object>(
+  formInstance: FairysValtioFormInstance<T>,
+) {
+  const state = useSnapshot(formInstance.state) as T;
+  return state as T;
+}
+/**
+ * 传递表单实例获取隐藏状态
+ */
+export function useFairysValtioFormInstanceToHideState<T extends MObject<T> = object>(
+  formInstance: FairysValtioFormInstance<T>,
+) {
+  const hideState = useSnapshot(formInstance.hideState) as Record<PropertyKey, boolean>;
+  return hideState as Record<PropertyKey, boolean>;
 }

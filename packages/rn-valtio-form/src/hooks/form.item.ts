@@ -73,6 +73,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
     isInvalidTextRed = parent_isInvalidTextRed,
     isJoinParentField = true,
     rules,
+    isRemoveValueOnUnmount = true,
   } = props;
   const {
     name: _name,
@@ -107,6 +108,14 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
       formInstance.removeRules(_name);
     };
   }, [_name, rules]);
+
+  useEffect(() => {
+    return () => {
+      if (isRemoveValueOnUnmount) {
+        formInstance.removeValueByPaths(_name);
+      }
+    };
+  }, []);
 
   const onValueChange = (event: any) => {
     let newValue = event;
@@ -371,6 +380,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
     isJoinParentField = true,
     rules,
     isRequired: _isRequired,
+    isRemoveValueOnUnmount = true,
   } = props;
   const [state, errorState, formInstance] = useFairysValtioFormInstanceContextState<T>();
   const {
@@ -395,7 +405,13 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
       formInstance.removeRules(_name);
     };
   }, [_name, rules]);
-
+  useEffect(() => {
+    return () => {
+      if (isRemoveValueOnUnmount) {
+        formInstance.removeValueByPaths(_name);
+      }
+    };
+  }, []);
   const onValueChange = (event: any) => {
     let newValue = event;
     const target = event?.nativeEvent;

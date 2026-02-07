@@ -6,6 +6,8 @@ import {
   useFairysValtioFormInstanceContext,
   useFairysValtioFormInstanceContextState,
   useFairysValtioFormInstanceContextHideState,
+  useFairysValtioFormInstanceToState,
+  useFairysValtioFormInstanceToHideState,
 } from '@fairys/valtio-form-basic/esm/common';
 
 import type { FairysValtioFormInstance, MObject } from '@fairys/valtio-form-basic/esm/common';
@@ -44,6 +46,10 @@ export const FairysRNValtioForm = React.forwardRef(
   FormItem: typeof FairysRNValtioFormItem;
   /**隐藏表单项组件*/
   FormHideItem: typeof FairysRNValtioFormHideItem;
+  /**传递表单实例获取状态*/
+  useFormInstanceToState: typeof useFairysValtioFormInstanceToState;
+  /**传递表单实例获取隐藏状态*/
+  useFormInstanceToHideState: typeof useFairysValtioFormInstanceToHideState;
 };
 /**初始化实例*/
 FairysRNValtioForm.useForm = useFairysValtioFormInstance;
@@ -59,3 +65,7 @@ FairysRNValtioForm.FormItemBase = FairysRNValtioFormItemBase;
 FairysRNValtioForm.FormItem = FairysRNValtioFormItem;
 /**隐藏表单想*/
 FairysRNValtioForm.FormHideItem = FairysRNValtioFormHideItem;
+/**传递表单实例获取状态*/
+FairysRNValtioForm.useFormInstanceToState = useFairysValtioFormInstanceToState;
+/**传递表单实例获取隐藏状态*/
+FairysRNValtioForm.useFormInstanceToHideState = useFairysValtioFormInstanceToHideState;

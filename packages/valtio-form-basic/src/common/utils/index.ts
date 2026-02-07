@@ -51,6 +51,25 @@ export function get<TDefault = unknown>(value: any, segments: PropertyKey[]): TD
 }
 
 /***
+ * 移除值
+ * @param value 任意值
+ * @param segments 键路径
+ */
+export function removeValueByPaths(value: any, segments: PropertyKey[]) {
+  // 移除字段
+  let current: any = value;
+  const lg = segments.length;
+  for (let index = 0; index < lg; index++) {
+    const key = segments[index];
+    if (index === lg - 1) {
+      delete current[key];
+    } else {
+      current = current?.[key];
+    }
+  }
+}
+
+/***
  * 格式化路径，将路径中的数组索引转换为数字
  * @param path 路径
  * @returns 格式化后的路径

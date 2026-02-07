@@ -81,6 +81,11 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = object> {
   isJoinParentField?: boolean;
   /**校验规则*/
   rules?: RuleItem[];
+
+  /**卸载移除数据值
+   * @default true
+   */
+  isRemoveValueOnUnmount?: boolean;
 }
 
 /**
@@ -173,6 +178,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
     isJoinParentField = true,
     rules,
     platform = parent_platform,
+    isRemoveValueOnUnmount = true,
   } = props;
 
   const {
@@ -216,6 +222,14 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = object>(prop
       onAfterUpdate(_value, formInstance, event);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (isRemoveValueOnUnmount) {
+        formInstance.removeValueByPaths(_name);
+      }
+    };
+  }, []);
 
   /**基础组件参数*/
   const baseControl = {
@@ -522,6 +536,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
     attrs = {},
     isJoinParentField = true,
     rules,
+    isRemoveValueOnUnmount = true,
   } = props;
   const [state, errorState, formInstance] = useFairysValtioFormInstanceContextState<T>();
   const {
@@ -563,6 +578,13 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = objec
       onAfterUpdate(_value, formInstance, event);
     }
   };
+  useEffect(() => {
+    return () => {
+      if (isRemoveValueOnUnmount) {
+        formInstance.removeValueByPaths(_name);
+      }
+    };
+  }, []);
   /**基础组件参数*/
   const baseControl = {
     ...attrs,
