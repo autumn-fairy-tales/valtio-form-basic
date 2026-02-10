@@ -3,7 +3,7 @@
   "author": "SunLxy <1011771396@qq.com>",
   "description": "pc表单框架组件",
   "homepage": "https://github.com/autumn-fairy-tales/valtio-form-basic",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "lib/index.js",
   "types": "esm/index.d.ts",
   "module": "esm/index.js",
@@ -25,7 +25,7 @@
     "esm"
   ],
   "dependencies": {
-    "@fairys/valtio-form-basic": "^1.0.1"
+    "@fairys/valtio-form-basic": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "~18.2.21",
