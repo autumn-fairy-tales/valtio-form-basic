@@ -10,7 +10,11 @@ import {
 } from '@fairys/valtio-form-basic/esm/common';
 import { formItemStyles } from './styles/form.item';
 import type { FairysValtioFormItemAttrsProps } from './hooks/form.item';
-import { useFairysValtioFormItemAttrs, useFairysValtioFormItemNoStyleAttrs } from 'hooks/form.item';
+import {
+  useFairysValtioFormItemAttrs,
+  useFairysValtioFormItemNoStyleAttrs,
+  useFairysValtioFormItemHideAttrs,
+} from 'hooks/form.item';
 
 export interface FairysRNValtioFormItemProps<T extends MObject<T> = Record<string, any>>
   extends Omit<ViewProps, 'style'>,
@@ -98,6 +102,15 @@ export function FairysRNValtioFormItemBase<T extends MObject<T> = Record<string,
     </View>
   );
 }
+
+/**隐藏表单项的空组件*/
+function FairysRNValtioFormHideItemEmpty<T extends MObject<T> = Record<string, any>>(
+  props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
+) {
+  useFairysValtioFormItemHideAttrs(props);
+  return <Fragment />;
+}
+
 /**控制隐藏的表单项*/
 export function FairysRNValtioFormHideItem<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysRNValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
@@ -105,7 +118,7 @@ export function FairysRNValtioFormHideItem<T extends MObject<T> = Record<string,
   const [state] = useFairysValtioFormInstanceContextHideState();
   const isHide = state[props.name];
   if (isHide) {
-    return <Fragment />;
+    return <FairysRNValtioFormHideItemEmpty<T> {...props} />;
   }
   return <FairysRNValtioFormItemBase<T> {...props} />;
 }

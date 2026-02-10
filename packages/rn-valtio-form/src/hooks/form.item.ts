@@ -75,7 +75,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     isInvalidTextRed = parent_isInvalidTextRed,
     isJoinParentField = true,
     rules,
-    isRemoveValueOnUnmount = true,
+    isRemoveValueOnUnmount = false,
   } = props;
   const {
     name: _name,
@@ -382,7 +382,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     isJoinParentField = true,
     rules,
     isRequired: _isRequired,
-    isRemoveValueOnUnmount = true,
+    isRemoveValueOnUnmount = false,
   } = props;
   const [state, errorState, formInstance] = useFairysValtioFormInstanceContextState<T>();
   const {
@@ -510,4 +510,22 @@ export interface FairysValtioFormItemNoStyleAttrsReturn<T extends MObject<T> = R
   formAttrsNameInstance: FairysValtioFormParentAttrs;
   /**子元素*/
   children?: React.ReactNode;
+}
+
+/**
+ * 处理表单表单项属性，隐藏表单项时移除数据值
+ */
+export function useFairysValtioFormItemHideAttrs<T extends MObject<T> = Record<string, any>>(
+  props: FairysValtioFormItemAttrsProps<T>,
+) {
+  const { name, isJoinParentField = true, isHideRemoveValue = true } = props;
+  const [, , formInstance] = useFairysValtioFormInstanceContextState<T>();
+  const { name: _name } = useFairysValtioFormAttrsName({ name, isJoinParentField });
+  useEffect(() => {
+    return () => {
+      if (isHideRemoveValue) {
+        formInstance.removeValueByPaths(_name);
+      }
+    };
+  }, []);
 }

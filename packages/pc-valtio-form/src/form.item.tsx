@@ -7,6 +7,7 @@ import {
   useFairysValtioFormInstanceContextHideState,
   useFairysValtioFormItemNoStyleAttrs,
   FairysValtioFormParentAttrsContext,
+  useFairysValtioFormItemHideAttrs,
 } from '@fairys/valtio-form-basic';
 
 export interface FairysPCValtioFormItemProps<T extends MObject<T> = Record<string, any>>
@@ -64,6 +65,15 @@ export function FairysPCValtioFormItemBase<T extends MObject<T> = Record<string,
     </div>
   );
 }
+
+/**隐藏表单项的空组件*/
+function FairysPCValtioFormHideItemEmpty<T extends MObject<T> = Record<string, any>>(
+  props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
+) {
+  useFairysValtioFormItemHideAttrs(props);
+  return <Fragment />;
+}
+
 /**控制隐藏的表单项*/
 export function FairysPCValtioFormHideItem<T extends MObject<T> = Record<string, any>>(
   props: Omit<FairysPCValtioFormItemProps<T>, 'isHide' | 'noStyle'>,
@@ -71,7 +81,7 @@ export function FairysPCValtioFormHideItem<T extends MObject<T> = Record<string,
   const [state] = useFairysValtioFormInstanceContextHideState();
   const isHide = state[props.name];
   if (isHide) {
-    return <Fragment />;
+    return <FairysPCValtioFormHideItemEmpty<T> {...props} />;
   }
   return <FairysPCValtioFormItemBase<T> {...props} />;
 }

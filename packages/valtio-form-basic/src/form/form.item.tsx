@@ -85,6 +85,8 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<st
    * @default true
    */
   isRemoveValueOnUnmount?: boolean;
+  /**隐藏表单项移除数据*/
+  isHideRemoveValue?: boolean;
 }
 
 /**
@@ -179,7 +181,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     isJoinParentField = true,
     rules,
     platform = parent_platform,
-    isRemoveValueOnUnmount = true,
+    isRemoveValueOnUnmount = false,
   } = props;
 
   const {
@@ -537,7 +539,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     attrs = {},
     isJoinParentField = true,
     rules,
-    isRemoveValueOnUnmount = true,
+    isRemoveValueOnUnmount = false,
     isRequired: _isRequired,
   } = props;
   const [state, errorState, formInstance] = useFairysValtioFormInstanceContextState<T>();
