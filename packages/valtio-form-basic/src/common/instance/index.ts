@@ -61,8 +61,8 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
         // this.state = proxy(copy(snapshot(formData)) as T);
         this.updated(copy(snapshot(formData)) as T, false);
       } else {
-        // this.state = formData as T;
-        this.updated(formData as T, false);
+        this.state = formData as T;
+        // this.updated(formData as T, false);
       }
     } else {
       if (initFormDataType === 'deepCopy') {
