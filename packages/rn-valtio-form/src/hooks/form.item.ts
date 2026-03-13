@@ -75,6 +75,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     isInvalidTextRed = parent_isInvalidTextRed,
     isJoinParentField = true,
     rules,
+    useRules = (rules) => rules,
     isRemoveValueOnUnmount = false,
   } = props;
   const {
@@ -99,17 +100,20 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
   const error = errorState[_name];
   // 使用从 Form 中设置的规则
   const _formItemRules = formInstance.rules?.[_name];
+  const _mergeRules = rules || _formItemRules;
+  const _lastRules = useRules?.(_mergeRules) || _mergeRules;
+
   const id = useId(_name);
   formInstance.nameToPaths[_name] = paths;
 
   useEffect(() => {
-    if (Array.isArray(rules) && rules.length) {
-      formInstance.mountRules[_name] = rules;
+    if (Array.isArray(_lastRules)) {
+      formInstance.mountRules[_name] = _lastRules;
     }
     return () => {
       formInstance.removeRules(_name);
     };
-  }, [_name, rules]);
+  }, [_name, _lastRules]);
 
   useEffect(() => {
     return () => {
@@ -151,13 +155,11 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
   const isRequired = useMemo(() => {
     if (_isRequired) {
       return _isRequired;
-    } else if (Array.isArray(rules) && rules.length) {
-      return rules.some((rule) => rule.required);
-    } else if (_formItemRules && Array.isArray(_formItemRules) && _formItemRules.length) {
-      return _formItemRules.some((rule) => rule.required);
+    } else if (Array.isArray(_lastRules)) {
+      return _lastRules.some((rule) => rule.required);
     }
     return false;
-  }, [rules, formInstance, _formItemRules]);
+  }, [_lastRules]);
 
   /**校验是否存在错误信息*/
   const isInvalid = useMemo(() => {
@@ -381,6 +383,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     attrs = {},
     isJoinParentField = true,
     rules,
+    useRules = (rules) => rules,
     isRequired: _isRequired,
     isRemoveValueOnUnmount = false,
   } = props;
@@ -395,18 +398,20 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
   const value = useMemo(() => get(state, paths), [state, paths]);
   const error = errorState[_name];
   formInstance.nameToPaths[_name] = paths;
-
   // 使用从 Form 中设置的规则
   const _formItemRules = formInstance.rules?.[_name];
+  const _mergeRules = rules || _formItemRules;
+  const _lastRules = useRules?.(_mergeRules) || _mergeRules;
 
   useEffect(() => {
-    if (Array.isArray(rules) && rules.length) {
-      formInstance.mountRules[_name] = rules;
+    if (Array.isArray(_lastRules)) {
+      formInstance.mountRules[_name] = _lastRules;
     }
     return () => {
       formInstance.removeRules(_name);
     };
-  }, [_name, rules]);
+  }, [_name, _lastRules]);
+
   useEffect(() => {
     return () => {
       if (isRemoveValueOnUnmount) {
@@ -444,13 +449,11 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
   const isRequired = useMemo(() => {
     if (_isRequired) {
       return _isRequired;
-    } else if (Array.isArray(rules) && rules.length) {
-      return rules.some((rule) => rule.required);
-    } else if (_formItemRules && Array.isArray(_formItemRules) && _formItemRules.length) {
-      return _formItemRules.some((rule) => rule.required);
+    } else if (Array.isArray(_lastRules)) {
+      return _lastRules.some((rule) => rule.required);
     }
     return false;
-  }, [rules, formInstance, _formItemRules]);
+  }, [_lastRules]);
 
   /**校验是否存在错误信息*/
   const isInvalid = useMemo(() => {
