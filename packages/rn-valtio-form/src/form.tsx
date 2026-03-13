@@ -51,6 +51,8 @@ export const FairysRNValtioForm = React.forwardRef(
   useFormInstanceToState: typeof useFairysValtioFormInstanceToState;
   /**传递表单实例获取隐藏状态*/
   useFormInstanceToHideState: typeof useFairysValtioFormInstanceToHideState;
+  /**布局组件*/
+  Layout: typeof FairysRNValtioFormLayout;
 };
 /**初始化实例*/
 FairysRNValtioForm.useForm = useFairysValtioFormInstance;
@@ -70,3 +72,5 @@ FairysRNValtioForm.FormHideItem = FairysRNValtioFormHideItem;
 FairysRNValtioForm.useFormInstanceToState = useFairysValtioFormInstanceToState;
 /**传递表单实例获取隐藏状态*/
 FairysRNValtioForm.useFormInstanceToHideState = useFairysValtioFormInstanceToHideState;
+/**布局组件*/
+FairysRNValtioForm.Layout = FairysRNValtioFormLayout;
