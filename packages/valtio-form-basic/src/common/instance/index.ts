@@ -20,21 +20,8 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
    * @returns 是否为代理对象
    */
   isValtioProxy = (value: any) => {
-    const { refSet } = unstable_getInternalStates();
-    const canProxyDefault = (x: unknown): boolean =>
-      isObject(x) &&
-      !refSet.has(x) &&
-      (Array.isArray(x) || !(Symbol.iterator in x)) &&
-      !(x instanceof WeakMap) &&
-      !(x instanceof WeakSet) &&
-      !(x instanceof Error) &&
-      !(x instanceof Number) &&
-      !(x instanceof Date) &&
-      !(x instanceof String) &&
-      !(x instanceof RegExp) &&
-      !(x instanceof ArrayBuffer) &&
-      !(x instanceof Promise);
-    return canProxyDefault(value);
+    const { proxyStateMap } = unstable_getInternalStates();
+    return proxyStateMap.has(value);
   };
 
   /**状态*/
@@ -58,18 +45,15 @@ export class FairysValtioFormInstance<T extends MObject<T> = Record<string, any>
     const isValtioProxy = this.isValtioProxy(formData);
     if (isValtioProxy) {
       if (initFormDataType === 'deepCopy') {
-        // this.state = proxy(copy(snapshot(formData)) as T);
         this.updated(copy(snapshot(formData)) as T, false);
       } else {
         this.state = formData as T;
-        // this.updated(formData as T, false);
       }
     } else {
       if (initFormDataType === 'deepCopy') {
         // this.state = proxy(copy(formData || {}) as T);
         this.updated(copy(formData || {}) as T, false);
-      }
-      {
+      } else {
         // this.state = proxy((formData || {}) as T);
         this.updated((formData || {}) as T, false);
       }

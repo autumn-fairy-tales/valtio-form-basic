@@ -1,6 +1,7 @@
 import { View } from '@tarojs/components';
 import { Button, Input } from '@nutui/nutui-react-taro';
 import { FairysTaroValtioForm } from '@fairys/taro-valtio-form-basic';
+import { proxy } from 'valtio';
 interface State {
   username?: string;
   username2?: string;
@@ -26,6 +27,12 @@ function Basic() {
         form={form}
         rules={{
           username: [{ required: true, message: '请输入用户名' }],
+        }}
+        formData={{
+          username: '张三',
+          username2: '李四',
+          username3: '王五',
+          username4: '赵六',
         }}
       >
         <FairysTaroValtioForm.FormItem name="username" label="用户名">

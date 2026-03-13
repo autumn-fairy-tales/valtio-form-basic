@@ -6,7 +6,9 @@ import Watch from './demo/basice.watch';
 function Index() {
   return (
     <Row gutter={20}>
-      <Col span={24}>
+      <Basic />
+
+      {/* <Col span={24}>
         <Card title="基础表单">
           <Basic />
         </Card>
@@ -20,7 +22,7 @@ function Index() {
         <Card title="监听表单">
           <Watch />
         </Card>
-      </Col>
+      </Col> */}
     </Row>
   );
 }
