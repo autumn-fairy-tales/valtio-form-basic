@@ -76,6 +76,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     isJoinParentField = true,
     rules,
     useRules = (rules) => rules,
+    userAttrs = (params) => params,
     isRemoveValueOnUnmount = false,
   } = props;
   const {
@@ -150,6 +151,8 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     [valuePropName]: value,
     [trigger]: onValueChange,
   };
+  /**自定义输入框属性*/
+  const _attrs = userAttrs?.(baseControl, formInstance) || baseControl;
 
   /**判断是否必填*/
   const isRequired = useMemo(() => {
@@ -294,7 +297,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     itemExtraStyle: itemExtra_style,
     errorStyle: itemError_style,
     helpStyle: itemHelp_style,
-    children: React.isValidElement(children) ? React.cloneElement(children, { ...baseControl }) : children,
+    children: React.isValidElement(children) ? React.cloneElement(children, { ..._attrs }) : children,
   } as FairysValtioFormItemAttrsReturn<T>;
 }
 
@@ -386,6 +389,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     useRules = (rules) => rules,
     isRequired: _isRequired,
     isRemoveValueOnUnmount = false,
+    userAttrs = (params) => params,
   } = props;
   const [state, errorState, formInstance] = useFairysValtioFormInstanceContextState<T>();
   const {
@@ -444,6 +448,8 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     [valuePropName]: value,
     [trigger]: onValueChange,
   };
+  /**自定义输入框属性*/
+  const _attrs = userAttrs?.(baseControl, formInstance) || baseControl;
 
   /**判断是否必填*/
   const isRequired = useMemo(() => {
@@ -478,7 +484,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     paths,
     parentName,
     formAttrsNameInstance,
-    children: React.isValidElement(children) ? React.cloneElement(children, { ...baseControl }) : children,
+    children: React.isValidElement(children) ? React.cloneElement(children, { ..._attrs }) : children,
   } as FairysValtioFormItemNoStyleAttrsReturn<T>;
 }
 

@@ -77,6 +77,8 @@ export interface FairysValtioFormItemAttrsProps<T extends MObject<T> = Record<st
   isInvalidTextRed?: boolean;
   /**输入框属性*/
   attrs?: any;
+  /**自定义输入框属性*/
+  userAttrs?: (params: any, form: FairysValtioFormInstance<T>) => any;
   /**是否拼接父级字段名*/
   isJoinParentField?: boolean;
   /**校验规则*/
@@ -185,6 +187,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     platform = parent_platform,
     isRemoveValueOnUnmount = false,
     useRules = (rules) => rules,
+    userAttrs = (params) => params,
   } = props;
 
   const {
@@ -248,6 +251,8 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     [valuePropName]: value,
     [trigger]: onValueChange,
   };
+  /**自定义输入框属性*/
+  const _attrs = userAttrs?.(baseControl, formInstance) || baseControl;
 
   /**判断是否必填*/
   const isRequired = useMemo(() => {
@@ -437,7 +442,7 @@ export function useFairysValtioFormItemAttrs<T extends MObject<T> = Record<strin
     itemExtraClassName: itemExtra_cls,
     errorClassName: itemError_cls,
     helpClassName: itemHelp_cls,
-    children: React.isValidElement(children) ? React.cloneElement(children, { ...baseControl }) : children,
+    children: React.isValidElement(children) ? React.cloneElement(children, { ..._attrs }) : children,
   } as FairysValtioFormItemAttrsReturn<T>;
 }
 
@@ -546,6 +551,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     useRules = (rules) => rules,
     isRemoveValueOnUnmount = false,
     isRequired: _isRequired,
+    userAttrs = (params) => params,
   } = props;
   const [state, errorState, formInstance] = useFairysValtioFormInstanceContextState<T>();
   const {
@@ -608,6 +614,8 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     [valuePropName]: value,
     [trigger]: onValueChange,
   };
+  /**自定义输入框属性*/
+  const _attrs = userAttrs?.(baseControl, formInstance) || baseControl;
 
   /**判断是否必填*/
   const isRequired = useMemo(() => {
@@ -641,7 +649,7 @@ export function useFairysValtioFormItemNoStyleAttrs<T extends MObject<T> = Recor
     paths,
     parentName,
     formAttrsNameInstance,
-    children: React.isValidElement(children) ? React.cloneElement(children, { ...baseControl }) : children,
+    children: React.isValidElement(children) ? React.cloneElement(children, { ..._attrs }) : children,
   } as FairysValtioFormItemNoStyleAttrsReturn<T>;
 }
 
